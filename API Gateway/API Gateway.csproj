@@ -4,16 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>API_Gateway</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Models\" />
-    <Folder Include="Data\DTOs\" />
-    <Folder Include="Services\" />
+    <PackageReference Include="Ocelot" Version="23.3.6" />
   </ItemGroup>
 
 </Project>
