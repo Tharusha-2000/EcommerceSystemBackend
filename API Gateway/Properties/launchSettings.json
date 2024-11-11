@@ -8,12 +8,12 @@
       "sslPort": 0
     }
   },
-  "profiles": {
-    "http": {
+  "profiles": {   
+    "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:5207",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
