@@ -1,4 +1,6 @@
 //using Ecommerce.userManage.Application.Services;
+using Ecommerce.userManage.Application.Service;
+using Ecommerce.userManage.Application.Services;
 using Ecommerce.userManage.Domain.Repositories;
 using Ecommerce.userManage.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,8 +24,12 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceConnection"));
 });
+builder.Services.AddDbContext<UserDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceConnection")));
+
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
-//builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("")

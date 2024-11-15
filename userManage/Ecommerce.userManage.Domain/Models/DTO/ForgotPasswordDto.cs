@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.userManage.Domain.Models.DTO
 {
-    public class ForgotPasswordRequest
+    public class ForgotPasswordDto
     {
         public string Email { get; set; }
     }

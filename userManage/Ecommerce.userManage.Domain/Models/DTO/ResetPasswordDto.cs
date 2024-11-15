@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.userManage.Domain.Models.DTO
 {
-    public class ResetPasswordRequest
+    public class ResetPasswordDto
     {
         [Required]
         [EmailAddress]
