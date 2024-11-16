@@ -74,7 +74,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-StripeConfiguration.ApiKey = "sk_test_51QLb3dCtgNr9CP7s7rsLhcGqWLcyRmerfiGwBDxLHmivYQGtsMPej5vc0i6zO8pjxHIsaH2JGaNXVAGyOrh3ceJx00uFzTeWIa";
+StripeConfiguration.ApiKey = "secret-key here";
 
 var app = builder.Build();
 
