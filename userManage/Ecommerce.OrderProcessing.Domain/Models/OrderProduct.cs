@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Ecommerce.OrderProcessing.Domain.Models
@@ -20,8 +21,9 @@ namespace Ecommerce.OrderProcessing.Domain.Models
         public int productId { get; set; }
         public string pizzaSize { get; set; }
         public int count { get; set; }
-
+        [JsonIgnore]
         public Order? Order { get; set; }
+        [JsonIgnore]
         public Product? Product { get; set; }
     }
 }
