@@ -1,0 +1,6 @@
+@Ecommerce.productManage.Api_HostAddress = http://localhost:5055
+
+GET {{Ecommerce.productManage.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
