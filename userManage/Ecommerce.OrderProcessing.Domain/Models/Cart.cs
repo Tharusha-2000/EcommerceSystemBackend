@@ -1,5 +1,4 @@
-﻿using Ecommerce.userManage.Domain.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,12 +14,9 @@ namespace Ecommerce.OrderProcessing.Domain.Models
         [Key]
         public int cartId { get; set; }
         
-        [ForeignKey("Id")]
         public int userId { get; set; }
         public int productId { get; set; }
         public string pizzaSize { get; set; }
         public int count { get; set; }
-        [JsonIgnore]
-        public UserModel? UserModel { get; set;}
     }
 }

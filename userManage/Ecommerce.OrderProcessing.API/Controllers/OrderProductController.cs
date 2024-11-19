@@ -35,12 +35,6 @@ namespace Ecommerce.OrderProcessing.API.Controllers
             return await _orderProductService.GetOrderProductsByOrderId(orderId);
         }
 
-        [HttpGet("byProduct/{productId}")]
-        public async Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProductsByProductId(int productId)
-        {
-            return await _orderProductService.GetOrderProductsByProductId(productId);
-        }
-
         [HttpPost]
         public async Task<ActionResult<OrderProduct>> PostOrderProduct(OrderProduct orderProduct)
         {
