@@ -22,10 +22,7 @@ namespace Ecommerce.OrderProcessing.API.Controllers
             if (_dbContext.OrderProducts == null)
                 return new NotFoundResult();
 
-            return await _dbContext.OrderProducts
-                .Include(op => op.Order)
-                .Include(op => op.Product)
-                .ToListAsync();
+            return await _dbContext.OrderProducts.ToListAsync();
         }
 
         public async Task<ActionResult<OrderProduct>> GetOrderProductById(int orderProductId)
@@ -33,11 +30,7 @@ namespace Ecommerce.OrderProcessing.API.Controllers
             if (_dbContext.OrderProducts == null)
                 return new NotFoundResult();
 
-            var orderProduct = await _dbContext.OrderProducts
-                .Include(op => op.Order)
-                .Include(op => op.Product)
-                .FirstOrDefaultAsync(op => op.orderProductId == orderProductId);
-
+            var orderProduct = await _dbContext.OrderProducts.FindAsync(orderProductId);
             if (orderProduct == null)
                 return new NotFoundResult();
 
@@ -51,26 +44,9 @@ namespace Ecommerce.OrderProcessing.API.Controllers
 
             var orderProducts = await _dbContext.OrderProducts
                 .Where(op => op.orderId == orderId)
-                .Include(op => op.Product)
                 .ToListAsync();
 
-            if (!orderProducts.Any())
-                return new NotFoundResult();
-
-            return orderProducts;
-        }
-
-        public async Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProductsByProductId(int productId)
-        {
-            if (_dbContext.OrderProducts == null)
-                return new NotFoundResult();
-
-            var orderProducts = await _dbContext.OrderProducts
-                .Where(op => op.productId == productId)
-                .Include(op => op.Order)
-                .ToListAsync();
-
-            if (!orderProducts.Any())
+            if (orderProducts == null || !orderProducts.Any())
                 return new NotFoundResult();
 
             return orderProducts;

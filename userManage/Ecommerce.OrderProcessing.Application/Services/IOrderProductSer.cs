@@ -10,7 +10,6 @@ namespace Ecommerce.OrderProcessing.API.Controllers
         Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProducts();
         Task<ActionResult<OrderProduct>> GetOrderProductById(int orderProductId);
         Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProductsByOrderId(int orderId);
-        Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProductsByProductId(int productId);
         Task<ActionResult<OrderProduct>> PostOrderProduct(OrderProduct orderProduct);
         Task<ActionResult> PutOrderProduct(int orderProductId, OrderProduct orderProduct);
         Task<ActionResult> DeleteOrderProduct(int orderProductId);

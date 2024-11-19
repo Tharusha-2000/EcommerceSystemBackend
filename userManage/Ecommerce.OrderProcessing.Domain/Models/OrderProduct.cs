@@ -16,14 +16,10 @@ namespace Ecommerce.OrderProcessing.Domain.Models
 
         [ForeignKey("orderId")]
         public int orderId { get; set; }
-
-        [ForeignKey("productId")]
         public int productId { get; set; }
         public string pizzaSize { get; set; }
         public int count { get; set; }
         [JsonIgnore]
         public Order? Order { get; set; }
-        [JsonIgnore]
-        public Product? Product { get; set; }
     }
 }
