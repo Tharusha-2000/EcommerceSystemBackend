@@ -16,16 +16,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderProcessing", "OrderProcessing", "{95338972-56D4-4C67-BB38-D045304CEE5F}"
+<<<<<<< HEAD
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.productManage.Api", "..\..\..\..\..\Desktop\EAD Project\BE\EcommerceSystemBackend\Ecommerce.productManage.Api\Ecommerce.productManage.Api.csproj", "{ABD9DFE7-A469-4EA1-AB5B-209CCE078EE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.OrderProcessing.API", "..\Ecommerce.OrderProcessing.API\Ecommerce.OrderProcessing.API.csproj", "{4EED2D70-4B5D-4CD1-9F4A-519CE6FCA0EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.productManage.Application", "..\..\..\..\..\Desktop\EAD Project\BE\EcommerceSystemBackend\Ecommerce.productManage.Application\Ecommerce.productManage.Application.csproj", "{89B175B9-A9C4-4A9B-BF8D-4A70D77411DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.OrderProcessing.Application", "..\Ecommerce.OrderProcessing.Application\Ecommerce.OrderProcessing.Application.csproj", "{EF6406C1-F8F5-49FA-AE84-686732B192B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.productManage.Domain", "..\..\..\..\..\Desktop\EAD Project\BE\EcommerceSystemBackend\Ecommerce.productManage.Domain\Ecommerce.productManage.Domain.csproj", "{A521A070-5F11-4316-85E1-8987AC846440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.OrderProcessing.Domain", "..\Ecommerce.OrderProcessing.Domain\Ecommerce.OrderProcessing.Domain.csproj", "{59F0E9BC-1753-470F-BC34-ADD20FC745D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.productManage.Infrastructure", "..\..\..\..\..\Desktop\EAD Project\BE\EcommerceSystemBackend\Ecommerce.productManage.Infrastructure\Ecommerce.productManage.Infrastructure.csproj", "{73EDAEC9-092E-455D-922B-ED95ED86FDFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.OrderProcessing.Infrastructure", "..\Ecommerce.OrderProcessing.Infrastructure\Ecommerce.OrderProcessing.Infrastructure.csproj", "{4E8EB8DB-40BA-4E73-BA50-1F8252B1B413}"
-EndProject
+=======
+>>>>>>> 80da338db19be2b63366f9c91c2ecf25c823ba93
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,22 +49,25 @@ Global
 		{FA024DDD-2683-4356-9FB7-012A664AF8AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA024DDD-2683-4356-9FB7-012A664AF8AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA024DDD-2683-4356-9FB7-012A664AF8AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4EED2D70-4B5D-4CD1-9F4A-519CE6FCA0EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EED2D70-4B5D-4CD1-9F4A-519CE6FCA0EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4EED2D70-4B5D-4CD1-9F4A-519CE6FCA0EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4EED2D70-4B5D-4CD1-9F4A-519CE6FCA0EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF6406C1-F8F5-49FA-AE84-686732B192B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF6406C1-F8F5-49FA-AE84-686732B192B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF6406C1-F8F5-49FA-AE84-686732B192B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF6406C1-F8F5-49FA-AE84-686732B192B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59F0E9BC-1753-470F-BC34-ADD20FC745D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59F0E9BC-1753-470F-BC34-ADD20FC745D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59F0E9BC-1753-470F-BC34-ADD20FC745D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59F0E9BC-1753-470F-BC34-ADD20FC745D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E8EB8DB-40BA-4E73-BA50-1F8252B1B413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E8EB8DB-40BA-4E73-BA50-1F8252B1B413}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E8EB8DB-40BA-4E73-BA50-1F8252B1B413}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E8EB8DB-40BA-4E73-BA50-1F8252B1B413}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
+		{ABD9DFE7-A469-4EA1-AB5B-209CCE078EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABD9DFE7-A469-4EA1-AB5B-209CCE078EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABD9DFE7-A469-4EA1-AB5B-209CCE078EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABD9DFE7-A469-4EA1-AB5B-209CCE078EE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89B175B9-A9C4-4A9B-BF8D-4A70D77411DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B175B9-A9C4-4A9B-BF8D-4A70D77411DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B175B9-A9C4-4A9B-BF8D-4A70D77411DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B175B9-A9C4-4A9B-BF8D-4A70D77411DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A521A070-5F11-4316-85E1-8987AC846440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A521A070-5F11-4316-85E1-8987AC846440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A521A070-5F11-4316-85E1-8987AC846440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A521A070-5F11-4316-85E1-8987AC846440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EDAEC9-092E-455D-922B-ED95ED86FDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EDAEC9-092E-455D-922B-ED95ED86FDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EDAEC9-092E-455D-922B-ED95ED86FDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EDAEC9-092E-455D-922B-ED95ED86FDFB}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> 80da338db19be2b63366f9c91c2ecf25c823ba93
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

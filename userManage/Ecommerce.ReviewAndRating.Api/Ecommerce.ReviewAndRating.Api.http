@@ -1,0 +1,6 @@
+@Ecommerce.ReviewAndRating.Api_HostAddress = http://localhost:5064
+
+GET {{Ecommerce.ReviewAndRating.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
