@@ -1,7 +1,6 @@
-using Ecommerce.UserManage.Api;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ecommerce.userManage.Api.Controllers
+namespace Ecommerce.ReviewAndRating.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
