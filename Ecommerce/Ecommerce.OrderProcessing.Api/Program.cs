@@ -1,3 +1,7 @@
+using Ecommerce.OrderProcessing.API.Controllers;
+using Ecommerce.OrderProcessing.Application.Services;
+using Ecommerce.OrderProcessing.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
