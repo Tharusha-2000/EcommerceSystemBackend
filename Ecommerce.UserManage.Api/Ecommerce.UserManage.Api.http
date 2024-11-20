@@ -1,6 +1,0 @@
-@Ecommerce.UserManage.Api_HostAddress = http://localhost:5288
-
-GET {{Ecommerce.UserManage.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
