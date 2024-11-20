@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -23,6 +23,12 @@
     <PackageReference Include="Stripe.net" Version="47.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.UserManage.Application\Ecommerce.UserManage.Application.csproj" />
+    <ProjectReference Include="..\Ecommerce.UserManage.Domain\Ecommerce.UserManage.Domain.csproj" />
+    <ProjectReference Include="..\Ecommerce.UserManage.Infrasctructrue\Ecommerce.UserManage.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
