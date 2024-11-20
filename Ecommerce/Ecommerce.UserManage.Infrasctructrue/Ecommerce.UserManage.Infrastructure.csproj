@@ -21,4 +21,8 @@
     <PackageReference Include="Stripe.net" Version="47.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.UserManage.Domain\Ecommerce.UserManage.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
