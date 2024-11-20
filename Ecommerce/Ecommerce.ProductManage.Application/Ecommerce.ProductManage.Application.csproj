@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.ProductManage.Domain\Ecommerce.ProductManage.Domain.csproj" />
+    <ProjectReference Include="..\Ecommerce.ProductManage.Infrastructure\Ecommerce.ProductManage.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
