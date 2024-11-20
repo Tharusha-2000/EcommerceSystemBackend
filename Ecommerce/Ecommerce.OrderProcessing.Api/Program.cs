@@ -7,6 +7,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<EcommerceDbContext>();
+
+builder.Services.AddScoped<EcommerceDbContext>();
+
+//---- dependency Injection---------
+builder.Services.AddScoped<ICartSer, CartSer>();
+builder.Services.AddScoped<IOrderSer, OrderSer>();
+builder.Services.AddScoped<IOrderProductSer, OrderProductSer>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
