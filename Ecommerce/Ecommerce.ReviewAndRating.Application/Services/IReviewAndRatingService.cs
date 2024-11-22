@@ -13,5 +13,9 @@ namespace Ecommerce.ReviewAndRating.Application.Services
         public Task SaveProductFeedback(FeedbackRequestDto feedbackDto);
         Task<List<DisplayFeedbackDto>> GetProductFeedback(int productId);
 
+        Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds);
+
+        Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds);
+
     }
 }

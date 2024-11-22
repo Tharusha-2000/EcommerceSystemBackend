@@ -1,6 +1,6 @@
 using Ecommerce.OrderProcessing.API.Controllers;
 using Ecommerce.OrderProcessing.Application.Services;
-using Ecommerce.OrderProcessing.Infrastructure;
+using Ecommerce.OrderProcessing.Infras;
 
 var builder = WebApplication.CreateBuilder(args);
 

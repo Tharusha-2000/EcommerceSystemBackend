@@ -25,7 +25,7 @@ builder.Services.AddControllers()
 //Dependency injection for ReviewAndRatingDbContext
 builder.Services.AddDbContext<ReviewAndRatingDbContext>(options =>
 {
-    options.UseSqlServer("server = DILSHAN; database = EcommerceDemo; Integrated Security = True; MultipleActiveResultSets = true; TrustServerCertificate = True;",
+    options.UseSqlServer("Server=tcp:pizzaslicedb.database.windows.net,1433;Initial Catalog=PizzaSliceDB;Encrypt=True;User ID=pizzaSliceDB;Password=EAD123#aa;MultipleActiveResultSets=False;TrustServerCertificate=False;",
 
    sqlServerOptions =>
    {
@@ -35,7 +35,7 @@ builder.Services.AddDbContext<ReviewAndRatingDbContext>(options =>
 });
 
 //Dependency injection for UserDbContext
-builder.Services.AddDbContext<UserDbContext>(options =>
+/*builder.Services.AddDbContext<UserDbContext>(options =>
 {
     options.UseSqlServer("server = DILSHAN; database = EcommerceDemo; Integrated Security = True; MultipleActiveResultSets = true; TrustServerCertificate = True;",
 
@@ -45,7 +45,7 @@ builder.Services.AddDbContext<UserDbContext>(options =>
    }
            );
 });
-
+*/
 
 builder.Services.AddCors(options =>
 {

@@ -1,13 +1,18 @@
 ﻿using Ecommerce.ReviewAndRating.Domain.DTOs;
 using Ecommerce.ReviewAndRating.Domain.Models;
 using Ecommerce.ReviewAndRating.Infrastructure;
-using Ecommerce.userManage.Infrastructure;
+//using Ecommerce.userManage.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Json;
+
 
 namespace Ecommerce.ReviewAndRating.Application.Services
 {
@@ -15,13 +20,16 @@ namespace Ecommerce.ReviewAndRating.Application.Services
     {
 
         private readonly ReviewAndRatingDbContext _context;
-        private readonly UserDbContext _userDbContext;
+        // private readonly UserDbContext _userDbContext;
+        private readonly HttpClient _httpClient;
 
-        public ReviewAndRatingService(ReviewAndRatingDbContext context, UserDbContext userDbContext)
+
+        public ReviewAndRatingService(ReviewAndRatingDbContext context, HttpClient httpClient)
        
         {
             _context = context;
-           _userDbContext = userDbContext;
+            //_userDbContext = userDbContext;
+            _httpClient = httpClient;
         }
 
 
@@ -84,12 +92,10 @@ namespace Ecommerce.ReviewAndRating.Application.Services
         {
             try
             {
-                // Step 1: Get feedbacks and associated orderIds using _context
+                // Step 1: Get feedbacks and associated orderIds from the current service
                 var feedbacks = await (from feedback in _context.Feedback
                                        join feedbackWithProduct in _context.FeedbackWithProduct
                                            on feedback.feedbackId equals feedbackWithProduct.feedbackId
-                                       join order in _context.Order
-                                           on feedback.orderId equals order.orderId
                                        where feedbackWithProduct.productId == productId
                                        select new
                                        {
@@ -97,56 +103,91 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                                            feedback.feedbackMessage,
                                            feedback.rate,
                                            feedback.givenDate,
-                                           order.userId
+                                           feedback.orderId
                                        }).ToListAsync();
 
-                // Step 2: Extract userIds from the results
-                var userIds = feedbacks.Select(f => f.userId).Distinct().ToList();
+                if (!feedbacks.Any())
+                {
+                    return new List<DisplayFeedbackDto>();
+                }
 
-                // Step 3: Get user information using _userDbContext
-                var users = await _userDbContext.UserModel
-                                                .Where(u => userIds.Contains(u.Id))
-                                                .Select(u => new { u.Id, u.FirstName, u.LastName })
-                                                .ToListAsync();
+                // Step 2: Extract orderIds from feedbacks
+                var orderIds = feedbacks.Select(f => f.orderId).Distinct().ToList();
 
-                // Step 4: Combine feedbacks with user details in memory, because can't access two different DbContexts in a single query
-                var feedbackDtos = feedbacks.Join(users,
-                                                  f => f.userId,
+                // Step 3: Call the Order service to get userIds for the orders
+                var orders = await GetOrdersByIdsAsync(orderIds); // API call to Order service
+
+                if (orders == null || !orders.Any())
+                {
+                    throw new ApplicationException("Failed to retrieve orders from the Order service.");
+                }
+
+                // Step 4: Extract unique userIds from the orders
+                var userIds = orders.Select(o => o.userId).Distinct().ToList();
+
+                // Step 5: Call the User service to get user details
+                var users = await GetUsersByIdsAsync(userIds); // API call to User service
+
+                if (users == null || !users.Any())
+                {
+                    throw new ApplicationException("Failed to retrieve users from the User service.");
+                }
+
+                // Step 6: Combine feedbacks with user and order details
+                var feedbackDtos = feedbacks.Join(orders,
+                                                  f => f.orderId,
+                                                  o => o.orderId,
+                                                  (f, o) => new { f, o.userId })
+                                            .Join(users,
+                                                  fo => fo.userId,
                                                   u => u.Id,
-                                                  (f, u) => new DisplayFeedbackDto
+                                                  (fo, u) => new DisplayFeedbackDto
                                                   {
-                                                      feedbackId = f.feedbackId,
+                                                      feedbackId = fo.f.feedbackId,
                                                       firstName = u.FirstName,
                                                       lastName = u.LastName,
-                                                      feedbackMessage = f.feedbackMessage,
-                                                      rate = f.rate,
-                                                      givenDate = f.givenDate
-                                                  }).ToList();
+                                                      feedbackMessage = fo.f.feedbackMessage,
+                                                      rate = fo.f.rate,
+                                                      givenDate = fo.f.givenDate
+                                                  })
+                                            .ToList();
 
                 return feedbackDtos;
             }
-
-            catch (InvalidOperationException ex)
-            {
-                // Handle query execution issues
-                throw new ApplicationException("An error occurred while retrieving product feedback.", ex);
-            }
-            catch (DbUpdateException ex)
-            {
-                // Handle database-related issues
-                throw new InvalidOperationException("A database error occurred while retrieving product feedback.", ex);
-            }
             catch (Exception ex)
             {
-                // Handle any other unexpected errors
-                throw new ApplicationException("An unexpected error occurred while retrieving product feedback.", ex);
+                // Handle exceptions
+                throw new ApplicationException("An error occurred while retrieving product feedback.", ex);
             }
-
-
-
-
-
         }
 
+
+        public async Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds)
+        {
+            var apiUrl = "https://localhost:7242/api/GetOrdersById/batch"; // Replace with actual endpoint
+
+            var response = await _httpClient.PostAsJsonAsync(apiUrl, orderIds);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<List<OrderDto>>();
+            }
+
+            throw new ApplicationException($"Failed to fetch orders. Status code: {response.StatusCode}");
+        }
+
+        public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
+        {
+            var apiUrl = "http://user-service/api/users/batch"; // Replace with actual endpoint
+
+            var response = await _httpClient.PostAsJsonAsync(apiUrl, userIds);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<List<UserDto>>();
+            }
+
+            throw new ApplicationException($"Failed to fetch users. Status code: {response.StatusCode}");
+        }
     }
 }

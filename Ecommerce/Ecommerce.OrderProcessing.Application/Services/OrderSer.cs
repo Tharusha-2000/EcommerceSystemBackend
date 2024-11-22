@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ecommerce.OrderProcessing.Domain.Models;
+using Ecommerce.OrderProcessing.Domain.DTOs;
 using Ecommerce.OrderProcessing.Infras;
+
 
 namespace Ecommerce.OrderProcessing.API.Controllers
 {
@@ -96,5 +98,25 @@ namespace Ecommerce.OrderProcessing.API.Controllers
 
             return new OkResult();
         }
+
+        public async Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds)
+        {
+            if (orderIds == null || !orderIds.Any())
+            {
+                throw new ArgumentException("Order IDs cannot be null or empty.", nameof(orderIds));
+            }
+
+            var orders = await _dbContext.Orders
+                                         .Where(o => orderIds.Contains(o.orderId))
+                                         .Select(o => new OrderDto
+                                         {
+                                             orderId = o.orderId,
+                                             userId = o.userId
+                                         })
+                                         .ToListAsync();
+
+            return orders;
+        }
+
     }
 }
