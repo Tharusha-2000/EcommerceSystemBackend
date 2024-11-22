@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ecommerce.OrderProcessing.Domain.Models;
-using Ecommerce.OrderProcessing.Infrastructure;
+using Ecommerce.OrderProcessing.Infras;
 
 namespace Ecommerce.OrderProcessing.API.Controllers
 {
