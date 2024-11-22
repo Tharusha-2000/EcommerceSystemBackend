@@ -1,6 +1,6 @@
 ﻿using Ecommerce.OrderProcessing.API.Controllers;
 using Ecommerce.OrderProcessing.Domain.Models;
-using Ecommerce.OrderProcessing.Infrastructure;
+using Ecommerce.OrderProcessing.Infras;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
