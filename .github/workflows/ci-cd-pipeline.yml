@@ -24,10 +24,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore Ecommerce/Ecommerce.sln
 
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build Ecommerce/Ecommerce.sln --no-restore
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test Ecommerce/Ecommerce.sln --no-build --verbosity normal
