@@ -1,5 +1,7 @@
 ﻿using Ecommerce.userManage.Domain.Models;
+using Ecommerce.userManage.Domain.Models.DTO;
 using Ecommerce.userManage.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,28 @@ namespace Ecommerce.userManage.Application.Service
             _context.Users.Add(userData);
             _context.SaveChanges();
         }
+
+        public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
+        {
+            if (userIds == null || !userIds.Any())
+                throw new ArgumentException("User IDs cannot be null or empty.");
+
+            var users = await _context.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ToListAsync();
+
+            // Manual mapping to UserDto
+            var userDtos = users.Select(user => new UserDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                
+            }).ToList();
+
+            return userDtos;
+        }
+
     }
 }
 

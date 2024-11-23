@@ -1,4 +1,5 @@
 ﻿using Ecommerce.userManage.Domain.Models;
+using Ecommerce.userManage.Domain.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Ecommerce.userManage.Application.Service
     public interface IUserService
     {
         public void addUser(UserModel userModel);
+        Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds);
     }
 }
