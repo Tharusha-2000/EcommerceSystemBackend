@@ -5,14 +5,14 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json");
-// Add services to the container.
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 // Add services to the container.
+
 builder.Services.AddScoped<IReviewAndRatingService, ReviewAndRatingService>();
 builder.Services.AddScoped<IInterServiceCommunication, InterServiceCommunication>();
 builder.Services.AddHttpClient<IInterServiceCommunication, InterServiceCommunication>();
