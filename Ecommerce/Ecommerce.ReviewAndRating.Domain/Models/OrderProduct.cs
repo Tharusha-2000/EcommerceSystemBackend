@@ -1,4 +1,5 @@
-﻿using System;
+﻿/* 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -27,3 +28,4 @@ namespace Ecommerce.ReviewAndRating.Domain.Models
         // public Product? Product { get; set; }
     }
 }
+*/

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ecommerce.OrderProcessing.Domain.Models;
+using Ecommerce.OrderProcessing.Domain.DTOs;
 
 namespace Ecommerce.OrderProcessing.API.Controllers
 {
@@ -13,5 +14,7 @@ namespace Ecommerce.OrderProcessing.API.Controllers
         Task<ActionResult<Order>> PostOrder(Order order);
         Task<ActionResult> PutOrder(int orderId, Order order);
         Task<ActionResult> DeleteOrder(int orderId);
+
+        Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds);
     }
 }

@@ -12,8 +12,8 @@ namespace Ecommerce.ReviewAndRating.Infrastructure
     {
        public DbSet<Feedback> Feedback { get; set; }
         public DbSet<FeedbackWithProduct> FeedbackWithProduct { get; set; }
-        public DbSet<Order> Order { get; set; }
-        public DbSet<OrderProduct> OrderProduct { get; set; }
+        //public DbSet<Order> Order { get; set; }
+       // public DbSet<OrderProduct> OrderProduct { get; set; }
 
 
         public ReviewAndRatingDbContext(DbContextOptions<ReviewAndRatingDbContext> options) : base(options)
@@ -28,7 +28,9 @@ namespace Ecommerce.ReviewAndRating.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "server = DILSHAN; database = EcommerceDemo; Integrated Security = True; MultipleActiveResultSets = true; TrustServerCertificate = True;";
+            var connectionString = "Server=tcp:pizzaslicedb.database.windows.net,1433;Initial Catalog=PizzaSliceDB;Encrypt=True;User ID=pizzaSliceDB;Password=EAD123#aa;MultipleActiveResultSets=False;TrustServerCertificate=False;";
+            //var connectionString = "server = DILSHAN; database = EcommerceDemo; Integrated Security = True; MultipleActiveResultSets = true; TrustServerCertificate = True;";
+
             optionsBuilder.UseSqlServer(connectionString);
         }
 

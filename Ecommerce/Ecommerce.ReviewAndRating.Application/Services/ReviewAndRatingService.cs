@@ -1,13 +1,17 @@
 ﻿using Ecommerce.ReviewAndRating.Domain.DTOs;
 using Ecommerce.ReviewAndRating.Domain.Models;
 using Ecommerce.ReviewAndRating.Infrastructure;
-using Ecommerce.userManage.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Json;
+
 
 namespace Ecommerce.ReviewAndRating.Application.Services
 {
@@ -15,15 +19,16 @@ namespace Ecommerce.ReviewAndRating.Application.Services
     {
 
         private readonly ReviewAndRatingDbContext _context;
-        private readonly UserDbContext _userDbContext;
+        private readonly IInterServiceCommunication _interServiceCommunication;
+       
 
-        public ReviewAndRatingService(ReviewAndRatingDbContext context, UserDbContext userDbContext)
+
+        public ReviewAndRatingService(ReviewAndRatingDbContext context, IInterServiceCommunication interServiceCommunication)
        
         {
             _context = context;
-           _userDbContext = userDbContext;
+            _interServiceCommunication = interServiceCommunication;
         }
-
 
 
         public async Task SaveProductFeedback(FeedbackRequestDto feedbackDto)
@@ -33,29 +38,26 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 var _feedback = new Feedback
                 {
 
-                    orderId = feedbackDto.orderId,
-                    feedbackMessage = feedbackDto.feedbackMessage,
-                    rate = feedbackDto.rate,
-                    givenDate = DateTime.Parse(feedbackDto.givenDate).ToString("yyyy-MM-dd")
+                    OrderId = feedbackDto.orderId,
+                    FeedbackMessage = feedbackDto.feedbackMessage,
+                    Rate = feedbackDto.rate,
+                    GivenDate = DateTime.Parse(feedbackDto.givenDate).ToString("yyyy-MM-dd")
                 };
 
                 _context.Feedback.Add(_feedback);
                 await _context.SaveChangesAsync();
 
                 // Retrieve the FeedbackId of the newly saved feedback
-                var savedFeedbackId = _feedback.feedbackId;
+                var savedFeedbackId = _feedback.FeedbackId;
 
                 // Step 2: Get ProductIds from the OrderProduct table using the orderId
-                var productIds = _context.OrderProduct
-                    .Where(op => op.orderId == feedbackDto.orderId)
-                    .Select(op => op.productId)
-                    .ToList();
+                var productIds = await _interServiceCommunication.GetProductIdFromOrderServicesAsync(feedbackDto.orderId);
 
                 // Step 3: Add entries to FeedbackWithProduct table
                 var feedbackWithProductEntries = productIds.Select(productId => new FeedbackWithProduct
                 {
-                    feedbackId = savedFeedbackId,
-                    productId = productId
+                    FeedbackId = savedFeedbackId,
+                    ProductId = productId
                 });
 
                 _context.FeedbackWithProduct.AddRange(feedbackWithProductEntries);
@@ -84,69 +86,78 @@ namespace Ecommerce.ReviewAndRating.Application.Services
         {
             try
             {
-                // Step 1: Get feedbacks and associated orderIds using _context
+                // Step 1: Get feedbacks and associated orderIds from the current service
                 var feedbacks = await (from feedback in _context.Feedback
                                        join feedbackWithProduct in _context.FeedbackWithProduct
-                                           on feedback.feedbackId equals feedbackWithProduct.feedbackId
-                                       join order in _context.Order
-                                           on feedback.orderId equals order.orderId
-                                       where feedbackWithProduct.productId == productId
+                                           on feedback.FeedbackId equals feedbackWithProduct.FeedbackId
+                                       where feedbackWithProduct.ProductId == productId
                                        select new
                                        {
-                                           feedback.feedbackId,
-                                           feedback.feedbackMessage,
-                                           feedback.rate,
-                                           feedback.givenDate,
-                                           order.userId
-                                       }).ToListAsync();
+                                           feedback.FeedbackId,
+                                           feedback.FeedbackMessage,
+                                           feedback.Rate,
+                                           feedback.GivenDate,
+                                           feedback.OrderId
+                                       })
+                                        .Distinct()
+                                       .ToListAsync();
 
-                // Step 2: Extract userIds from the results
-                var userIds = feedbacks.Select(f => f.userId).Distinct().ToList();
+                if (!feedbacks.Any())
+                {
+                    return new List<DisplayFeedbackDto>();
+                }
 
-                // Step 3: Get user information using _userDbContext
-                var users = await _userDbContext.UserModel
-                                                .Where(u => userIds.Contains(u.Id))
-                                                .Select(u => new { u.Id, u.FirstName, u.LastName })
-                                                .ToListAsync();
+                // Step 2: Extract orderIds from feedbacks
+                var orderIds = feedbacks.Select(f => f.OrderId).Distinct().ToList();
 
-                // Step 4: Combine feedbacks with user details in memory, because can't access two different DbContexts in a single query
-                var feedbackDtos = feedbacks.Join(users,
-                                                  f => f.userId,
+                // Step 3: Call the Order service to get userIds for the orders
+                var orders = await _interServiceCommunication.GetOrdersByIdsAsync(orderIds); // API call to Order service
+
+                if (orders == null || !orders.Any())
+                {
+                    throw new ApplicationException("Failed to retrieve orders from the Order service.");
+                }
+
+                // Step 4: Extract unique userIds from the orders
+                var userIds = orders.Select(o => o.userId).Distinct().ToList();
+
+                // Step 5: Call the User service to get user details
+                var users = await _interServiceCommunication.GetUsersByIdsAsync(userIds); // API call to User service
+
+                if (users == null || !users.Any())
+                {
+                    throw new ApplicationException("Failed to retrieve users from the User service.");
+                }
+
+                // Step 6: Combine feedbacks with user and order details
+                var feedbackDtos = feedbacks.Join(orders,
+                                                  f => f.OrderId,
+                                                  o => o.orderId,
+                                                  (f, o) => new { f, o.userId })
+                                            .Join(users,
+                                                  fo => fo.userId,
                                                   u => u.Id,
-                                                  (f, u) => new DisplayFeedbackDto
+                                                  (fo, u) => new DisplayFeedbackDto
                                                   {
-                                                      feedbackId = f.feedbackId,
+                                                      feedbackId = fo.f.FeedbackId,
                                                       firstName = u.FirstName,
                                                       lastName = u.LastName,
-                                                      feedbackMessage = f.feedbackMessage,
-                                                      rate = f.rate,
-                                                      givenDate = f.givenDate
-                                                  }).ToList();
+                                                      feedbackMessage = fo.f.FeedbackMessage,
+                                                      rate = fo.f.Rate,
+                                                      givenDate = fo.f.GivenDate
+                                                  })
+                                            .Distinct()
+                                            .ToList();
 
                 return feedbackDtos;
             }
-
-            catch (InvalidOperationException ex)
-            {
-                // Handle query execution issues
-                throw new ApplicationException("An error occurred while retrieving product feedback.", ex);
-            }
-            catch (DbUpdateException ex)
-            {
-                // Handle database-related issues
-                throw new InvalidOperationException("A database error occurred while retrieving product feedback.", ex);
-            }
             catch (Exception ex)
             {
-                // Handle any other unexpected errors
-                throw new ApplicationException("An unexpected error occurred while retrieving product feedback.", ex);
+                // Handle exceptions
+                throw new ApplicationException("An error occurred while retrieving product feedback.", ex);
             }
-
-
-
-
-
-        }
+        }  
 
     }
 }
+
