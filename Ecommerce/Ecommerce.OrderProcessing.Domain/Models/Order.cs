@@ -19,7 +19,7 @@ namespace Ecommerce.OrderProcessing.Domain.Models
         public string type { get; set; }
         public string street { get; set; }
         public string city { get; set; }
-        public string state { get; set; }
+        public string province { get; set; }
         public string country { get; set; }
         public int postalcode { get; set; }
         public string phoneNum { get; set; }
