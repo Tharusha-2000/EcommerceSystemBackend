@@ -1,6 +1,5 @@
 using Ecommerce.ReviewAndRating.Application.Services;
 using Ecommerce.ReviewAndRating.Infrastructure;
-//using Ecommerce.userManage.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 
@@ -15,12 +14,16 @@ builder.Services.AddSwaggerGen();
 
 // Add services to the container.
 builder.Services.AddScoped<IReviewAndRatingService, ReviewAndRatingService>();
+builder.Services.AddScoped<IInterServiceCommunication, InterServiceCommunication>();
+builder.Services.AddHttpClient<IInterServiceCommunication, InterServiceCommunication>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
     });
+
+
 
 //Dependency injection for ReviewAndRatingDbContext
 builder.Services.AddDbContext<ReviewAndRatingDbContext>(options =>
@@ -34,18 +37,7 @@ builder.Services.AddDbContext<ReviewAndRatingDbContext>(options =>
            );
 });
 
-//Dependency injection for UserDbContext
-/*builder.Services.AddDbContext<UserDbContext>(options =>
-{
-    options.UseSqlServer("server = DILSHAN; database = EcommerceDemo; Integrated Security = True; MultipleActiveResultSets = true; TrustServerCertificate = True;",
 
-   sqlServerOptions =>
-   {
-       sqlServerOptions.EnableRetryOnFailure();
-   }
-           );
-});
-*/
 
 builder.Services.AddCors(options =>
 {

@@ -8,11 +8,11 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
     [ApiController]
     public class GetOrdersByIdsAsyncController : ControllerBase
     {
-        private IReviewAndRatingService _reviewAndRatingService;
+        private IInterServiceCommunication _interServiceCommunication;
 
-        public GetOrdersByIdsAsyncController(IReviewAndRatingService reviewAndRatingService)
+        public GetOrdersByIdsAsyncController(IInterServiceCommunication interServiceCommunication)
         {
-            _reviewAndRatingService = reviewAndRatingService;
+            _interServiceCommunication = interServiceCommunication;
         }
 
         [HttpPost("batch")]
@@ -20,7 +20,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
         {
             try
             {
-                var orders = await _reviewAndRatingService.GetOrdersByIdsAsync(orderIds);
+                var orders = await _interServiceCommunication.GetOrdersByIdsAsync(orderIds);
                 return Ok(orders);
             }
             catch (ApplicationException ex)

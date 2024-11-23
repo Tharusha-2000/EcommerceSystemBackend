@@ -1,7 +1,6 @@
 ﻿using Ecommerce.ReviewAndRating.Domain.DTOs;
 using Ecommerce.ReviewAndRating.Domain.Models;
 using Ecommerce.ReviewAndRating.Infrastructure;
-//using Ecommerce.userManage.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,18 +19,16 @@ namespace Ecommerce.ReviewAndRating.Application.Services
     {
 
         private readonly ReviewAndRatingDbContext _context;
-        // private readonly UserDbContext _userDbContext;
-        private readonly HttpClient _httpClient;
+        private readonly IInterServiceCommunication _interServiceCommunication;
+       
 
 
-        public ReviewAndRatingService(ReviewAndRatingDbContext context, HttpClient httpClient)
+        public ReviewAndRatingService(ReviewAndRatingDbContext context, IInterServiceCommunication interServiceCommunication)
        
         {
             _context = context;
-            //_userDbContext = userDbContext;
-            _httpClient = httpClient;
+            _interServiceCommunication = interServiceCommunication;
         }
-
 
 
         public async Task SaveProductFeedback(FeedbackRequestDto feedbackDto)
@@ -41,29 +38,26 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 var _feedback = new Feedback
                 {
 
-                    orderId = feedbackDto.orderId,
-                    feedbackMessage = feedbackDto.feedbackMessage,
-                    rate = feedbackDto.rate,
-                    givenDate = DateTime.Parse(feedbackDto.givenDate).ToString("yyyy-MM-dd")
+                    OrderId = feedbackDto.orderId,
+                    FeedbackMessage = feedbackDto.feedbackMessage,
+                    Rate = feedbackDto.rate,
+                    GivenDate = DateTime.Parse(feedbackDto.givenDate).ToString("yyyy-MM-dd")
                 };
 
                 _context.Feedback.Add(_feedback);
                 await _context.SaveChangesAsync();
 
                 // Retrieve the FeedbackId of the newly saved feedback
-                var savedFeedbackId = _feedback.feedbackId;
+                var savedFeedbackId = _feedback.FeedbackId;
 
                 // Step 2: Get ProductIds from the OrderProduct table using the orderId
-                var productIds = _context.OrderProduct
-                    .Where(op => op.orderId == feedbackDto.orderId)
-                    .Select(op => op.productId)
-                    .ToList();
+                var productIds = await _interServiceCommunication.GetProductIdFromOrderServicesAsync(feedbackDto.orderId);
 
                 // Step 3: Add entries to FeedbackWithProduct table
                 var feedbackWithProductEntries = productIds.Select(productId => new FeedbackWithProduct
                 {
-                    feedbackId = savedFeedbackId,
-                    productId = productId
+                    FeedbackId = savedFeedbackId,
+                    ProductId = productId
                 });
 
                 _context.FeedbackWithProduct.AddRange(feedbackWithProductEntries);
@@ -95,16 +89,18 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 // Step 1: Get feedbacks and associated orderIds from the current service
                 var feedbacks = await (from feedback in _context.Feedback
                                        join feedbackWithProduct in _context.FeedbackWithProduct
-                                           on feedback.feedbackId equals feedbackWithProduct.feedbackId
-                                       where feedbackWithProduct.productId == productId
+                                           on feedback.FeedbackId equals feedbackWithProduct.FeedbackId
+                                       where feedbackWithProduct.ProductId == productId
                                        select new
                                        {
-                                           feedback.feedbackId,
-                                           feedback.feedbackMessage,
-                                           feedback.rate,
-                                           feedback.givenDate,
-                                           feedback.orderId
-                                       }).ToListAsync();
+                                           feedback.FeedbackId,
+                                           feedback.FeedbackMessage,
+                                           feedback.Rate,
+                                           feedback.GivenDate,
+                                           feedback.OrderId
+                                       })
+                                        .Distinct()
+                                       .ToListAsync();
 
                 if (!feedbacks.Any())
                 {
@@ -112,10 +108,10 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 }
 
                 // Step 2: Extract orderIds from feedbacks
-                var orderIds = feedbacks.Select(f => f.orderId).Distinct().ToList();
+                var orderIds = feedbacks.Select(f => f.OrderId).Distinct().ToList();
 
                 // Step 3: Call the Order service to get userIds for the orders
-                var orders = await GetOrdersByIdsAsync(orderIds); // API call to Order service
+                var orders = await _interServiceCommunication.GetOrdersByIdsAsync(orderIds); // API call to Order service
 
                 if (orders == null || !orders.Any())
                 {
@@ -126,7 +122,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 var userIds = orders.Select(o => o.userId).Distinct().ToList();
 
                 // Step 5: Call the User service to get user details
-                var users = await GetUsersByIdsAsync(userIds); // API call to User service
+                var users = await _interServiceCommunication.GetUsersByIdsAsync(userIds); // API call to User service
 
                 if (users == null || !users.Any())
                 {
@@ -135,7 +131,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
                 // Step 6: Combine feedbacks with user and order details
                 var feedbackDtos = feedbacks.Join(orders,
-                                                  f => f.orderId,
+                                                  f => f.OrderId,
                                                   o => o.orderId,
                                                   (f, o) => new { f, o.userId })
                                             .Join(users,
@@ -143,13 +139,14 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                                                   u => u.Id,
                                                   (fo, u) => new DisplayFeedbackDto
                                                   {
-                                                      feedbackId = fo.f.feedbackId,
+                                                      feedbackId = fo.f.FeedbackId,
                                                       firstName = u.FirstName,
                                                       lastName = u.LastName,
-                                                      feedbackMessage = fo.f.feedbackMessage,
-                                                      rate = fo.f.rate,
-                                                      givenDate = fo.f.givenDate
+                                                      feedbackMessage = fo.f.FeedbackMessage,
+                                                      rate = fo.f.Rate,
+                                                      givenDate = fo.f.GivenDate
                                                   })
+                                            .Distinct()
                                             .ToList();
 
                 return feedbackDtos;
@@ -159,35 +156,8 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 // Handle exceptions
                 throw new ApplicationException("An error occurred while retrieving product feedback.", ex);
             }
-        }
+        }  
 
-
-        public async Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds)
-        {
-            var apiUrl = "https://localhost:7242/api/GetOrdersById/batch"; // Replace with actual endpoint
-
-            var response = await _httpClient.PostAsJsonAsync(apiUrl, orderIds);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<List<OrderDto>>();
-            }
-
-            throw new ApplicationException($"Failed to fetch orders. Status code: {response.StatusCode}");
-        }
-
-        public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
-        {
-            var apiUrl = "http://user-service/api/users/batch"; // Replace with actual endpoint
-
-            var response = await _httpClient.PostAsJsonAsync(apiUrl, userIds);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<List<UserDto>>();
-            }
-
-            throw new ApplicationException($"Failed to fetch users. Status code: {response.StatusCode}");
-        }
     }
 }
+

@@ -1,18 +1,18 @@
-﻿using Ecommerce.ReviewAndRating.Application.Services;
+﻿using Ecommerce.userManage.Application.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ecommerce.ReviewAndRating.Api.Controllers
+namespace Ecommerce.UserManage.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GetUsersByIdsAsyncController : ControllerBase
+    public class GetUsersByIdsController : ControllerBase
     {
-        private IInterServiceCommunication _interServiceCommunication;
+        private readonly IUserService _userService;
 
-        public GetUsersByIdsAsyncController(IInterServiceCommunication interServiceCommunication)
+        public GetUsersByIdsController(IUserService userService)
         {
-            _interServiceCommunication = interServiceCommunication;
+            _userService = userService;
         }
 
         [HttpPost("batch")]
@@ -20,7 +20,10 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
         {
             try
             {
-                var users = await _interServiceCommunication.GetUsersByIdsAsync(userIds);
+                // Call the service method
+                var users = await _userService.GetUsersByIdsAsync(userIds);
+
+                // Return results
                 return Ok(users);
             }
             catch (ApplicationException ex)
