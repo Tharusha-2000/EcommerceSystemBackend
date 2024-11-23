@@ -15,6 +15,8 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _interServiceCommunication = interServiceCommunication;
         }
 
+
+
         [HttpPost("batch")]
         public async Task<IActionResult> GetUsersByIds([FromBody] List<int> userIds)
         {
