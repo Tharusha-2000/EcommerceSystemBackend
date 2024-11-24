@@ -10,5 +10,9 @@ namespace Ecommerce.userManage.Application.Service
     public interface IUserService
     {
         public void addUser(UserModel userModel);
+
+        public List<UserModel> getUserById(int Id);
+
+        public void updateUser(UserModel userModel);
     }
 }
