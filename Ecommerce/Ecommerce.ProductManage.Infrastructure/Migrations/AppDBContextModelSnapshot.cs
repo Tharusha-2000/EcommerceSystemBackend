@@ -78,9 +78,6 @@ namespace Ecommerce.ProductManage.Infrastructure.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
-
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -97,7 +94,6 @@ namespace Ecommerce.ProductManage.Infrastructure.Migrations
                             ProductsizeId = 1,
                             Price = 950.0,
                             ProductId = 1,
-                            Qty = 10,
                             Size = "M"
                         });
                 });

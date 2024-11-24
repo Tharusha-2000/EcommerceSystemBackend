@@ -10,6 +10,12 @@ namespace Ecommerce.ProductManage.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ProductSizes");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
@@ -35,7 +41,6 @@ namespace Ecommerce.ProductManage.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    Qty = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -56,8 +61,8 @@ namespace Ecommerce.ProductManage.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "ProductSizes",
-                columns: new[] { "ProductsizeId", "Price", "ProductId", "Qty", "Size" },
-                values: new object[] { 1, 950.0, 1, 10, "M" });
+                columns: new[] { "ProductsizeId", "Price", "ProductId", "Size" },
+                values: new object[] { 1, 950.0, 1, "M" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductSizes_ProductId",
