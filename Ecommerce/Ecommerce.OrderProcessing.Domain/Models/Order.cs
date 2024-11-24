@@ -25,5 +25,6 @@ namespace Ecommerce.OrderProcessing.Domain.Models
         public string phoneNum { get; set; }
         public bool paymentStatus { get; set; }
         public string OrderStatus { get; set; }
+        public string Date { get; set; } 
     }
 }
