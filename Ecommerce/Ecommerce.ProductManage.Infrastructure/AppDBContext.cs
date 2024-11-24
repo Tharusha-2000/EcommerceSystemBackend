@@ -27,8 +27,7 @@ namespace Ecommerce.ProductManage.Infrastructure
                 ProductsizeId = 1,
                 ProductId = 1,
                 Size = "M",
-                Price = 950,
-                Qty = 10,
+                Price = 950
             };
 
             modelBuilder.Entity<Product>().HasData(new Product
