@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Ecommerce.OrderProcessing.Domain.Models;
 
 namespace Ecommerce.OrderProcessing.API.Controllers
