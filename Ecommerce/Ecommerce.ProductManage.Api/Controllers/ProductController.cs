@@ -32,6 +32,8 @@ namespace Ecommerce.ProductManage.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            Console.WriteLine(productId);
+
             var product = await _ProductService.GetProductByIdAsync(productId);
 
             if (product == null)
