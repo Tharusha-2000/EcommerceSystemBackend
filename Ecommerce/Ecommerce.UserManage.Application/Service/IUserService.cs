@@ -14,5 +14,6 @@ namespace Ecommerce.userManage.Application.Service
         public List<UserModel> getUserById(int Id);
 
         public void updateUser(UserModel userModel);
+        public List<UserModel> getUserByEmail(string email);
     }
 }

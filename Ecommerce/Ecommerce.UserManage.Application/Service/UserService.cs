@@ -54,6 +54,12 @@ namespace Ecommerce.userManage.Application.Service
                 _context.SaveChanges();
             }
         }
+
+        public List<UserModel> getUserByEmail(string email)
+        {
+            var userData = _context.Users.Where(x => x.Email == email).ToList();
+            return userData;
+        }
     }
 }
 

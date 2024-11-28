@@ -61,5 +61,20 @@ namespace Ecommerce.userManage.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("email/{email?}")]
+        public IActionResult getUserByEmail(string email)
+        {
+            try
+            {
+                var userData = _userService.getUserByEmail(email);
+                return Ok(userData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
