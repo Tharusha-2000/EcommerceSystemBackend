@@ -36,34 +36,6 @@ namespace Ecommerce.userManage.Application.Service
             _context.SaveChanges();
         }
 
-
-        public List<UserModel> getUserById(int Id)
-        {
-            var userData = _context.Users.Where(x => x.Id == Id).ToList();
-            return userData;
-        }
-
-        public void updateUser(UserModel userModel)
-        {
-            var userData = _context.Users.Where(x => x.Id == userModel.Id).FirstOrDefault();
-            if (userData != null)
-            {
-                userData.FirstName = userModel.FirstName;
-                userData.LastName = userModel.LastName;
-                userData.Email = userModel.Email;
-                userData.UserType = userModel.UserType;
-                userData.PhoneNo = userModel.PhoneNo;
-                userData.Address = userModel.Address;
-                _context.SaveChanges();
-            }
-        }
-
-        public List<UserModel> getUserByEmail(string email)
-        {
-            var userData = _context.Users.Where(x => x.Email == email).ToList();
-            return userData;
-        }
-
         public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
         {
             if (userIds == null || !userIds.Any())
@@ -84,7 +56,6 @@ namespace Ecommerce.userManage.Application.Service
 
             return userDtos;
         }
-
 
     }
 }
