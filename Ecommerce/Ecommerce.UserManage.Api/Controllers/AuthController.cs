@@ -95,7 +95,7 @@ namespace Ecommerce.userManage.Api.Controllers
 
                         var response = new
                         {
-                            JwtToken = jwtToken
+                            JwtToken = jwtToken.Result
                         };
 
                         return Ok(response);
