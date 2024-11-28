@@ -33,13 +33,6 @@ namespace Ecommerce.userManage.Api.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestcsDto)
         {
-
-            var existingUser = await userManager.FindByNameAsync(registerRequestcsDto.Username);
-            if (existingUser != null)
-            {
-                return BadRequest(new { Message = "You are already in the system" });
-            }
-
             // Create a new IdentityUser based on the provided username and email
             var identityUser = new IdentityUser
             {
@@ -95,7 +88,7 @@ namespace Ecommerce.userManage.Api.Controllers
 
                         var response = new
                         {
-                            JwtToken = jwtToken.Result
+                            JwtToken = jwtToken
                         };
 
                         return Ok(response);
@@ -156,7 +149,7 @@ namespace Ecommerce.userManage.Api.Controllers
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
-                        try
+            try
             {
                 var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
                 if (user == null)
