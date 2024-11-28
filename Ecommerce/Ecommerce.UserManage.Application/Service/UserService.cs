@@ -1,5 +1,7 @@
 ﻿using Ecommerce.userManage.Domain.Models;
+using Ecommerce.userManage.Domain.Models.DTO;
 using Ecommerce.userManage.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,7 @@ namespace Ecommerce.userManage.Application.Service
             _context.SaveChanges();
         }
 
+
         public List<UserModel> getUserById(int Id)
         {
             var userData = _context.Users.Where(x => x.Id == Id).ToList();
@@ -60,6 +63,29 @@ namespace Ecommerce.userManage.Application.Service
             var userData = _context.Users.Where(x => x.Email == email).ToList();
             return userData;
         }
+
+        public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
+        {
+            if (userIds == null || !userIds.Any())
+                throw new ArgumentException("User IDs cannot be null or empty.");
+
+            var users = await _context.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ToListAsync();
+
+            // Manual mapping to UserDto
+            var userDtos = users.Select(user => new UserDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                
+            }).ToList();
+
+            return userDtos;
+        }
+
+
     }
 }
 
