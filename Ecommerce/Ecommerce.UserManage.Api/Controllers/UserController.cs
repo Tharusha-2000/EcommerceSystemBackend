@@ -32,7 +32,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
            
         }
-        [HttpPost("{Id?}")]
+        [HttpGet("{Id?}")]
         public IActionResult getUserById(int Id)
         {
             try
@@ -62,7 +62,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
-        [HttpPost("email/{email?}")]
+        [HttpGet("email/{email?}")]
         public IActionResult getUserByEmail(string email)
         {
             try
