@@ -32,5 +32,51 @@ namespace Ecommerce.userManage.Api.Controllers
             }
            
         }
+
+        [HttpGet("{Id?}")]
+        public IActionResult getUserById(int Id)
+        {
+            try
+            {
+                var userData = _userService.getUserById(Id);
+                return Ok(userData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult updateUser(UserModel userModel)
+        {
+            try
+            {
+                _userService.updateUser(userModel);
+                return Ok("user updated successfully");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("email/{email?}")]
+        public IActionResult getUserByEmail(string email)
+        {
+            try
+            {
+                var userData = _userService.getUserByEmail(email);
+                return Ok(userData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
