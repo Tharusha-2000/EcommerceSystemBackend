@@ -67,7 +67,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
     {
-        builder.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176")
+        builder.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://localhost:5174", "http://localhost:8081", "http://localhost:8080", "http://localhost:5175", "http://localhost:5176")
                .AllowAnyHeader()
                .AllowAnyMethod()
                .AllowCredentials();
@@ -76,6 +76,13 @@ builder.Services.AddCors(options =>
 
 StripeConfiguration.ApiKey = "secret-key here";
 
+
+
+// Add this to ensure Kestrel listens on 0.0.0.0 and the container's exposed port
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(8080); // Ensure the app listens on port 8080 inside the container
+//});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -84,13 +91,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowLocalhost");
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
