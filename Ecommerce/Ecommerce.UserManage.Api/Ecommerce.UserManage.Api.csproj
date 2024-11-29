@@ -4,8 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>b0c70b34-ec95-4e7f-aaf3-916b32c217fa</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +19,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="MimeKit" Version="4.8.0" />
     <PackageReference Include="Stripe.net" Version="47.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -31,7 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ecommerce.UserManage.Application\Ecommerce.UserManage.Application.csproj" />
     <ProjectReference Include="..\Ecommerce.UserManage.Domain\Ecommerce.UserManage.Domain.csproj" />
-    <ProjectReference Include="..\Ecommerce.UserManage.Infrastructure\Ecommerce.UserManage.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ecommerce.UserManage.Infrasctructrue\Ecommerce.UserManage.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

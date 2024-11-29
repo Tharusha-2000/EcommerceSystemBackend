@@ -9,6 +9,6 @@ namespace Ecommerce.userManage.Domain.Repositories
 {
     public interface ITokenRepository
     {
-        Task<string> CreateJWTtoken(IdentityUser user, List<string> roles);
+        string CreateJWTtoken(IdentityUser user, List<string> roles);
     }
 }

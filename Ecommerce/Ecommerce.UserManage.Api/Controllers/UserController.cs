@@ -32,6 +32,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
            
         }
+
         [HttpGet("{Id?}")]
         public IActionResult getUserById(int Id)
         {
@@ -76,5 +77,6 @@ namespace Ecommerce.userManage.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }
