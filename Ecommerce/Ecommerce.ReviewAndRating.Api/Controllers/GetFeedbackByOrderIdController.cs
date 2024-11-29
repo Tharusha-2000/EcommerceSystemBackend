@@ -1,6 +1,6 @@
 ﻿using Ecommerce.ReviewAndRating.Application.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Ecommerce.ReviewAndRating.Api.Controllers
 {
@@ -15,7 +15,8 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _reviewAndRatingService = reviewAndRatingService;
         }
 
-        [HttpGet]
+        [HttpGet("{orderId}")]
+
         public async Task<IActionResult> GetFeedbackByOrderId(int orderId)
         {
             var feedback = await _reviewAndRatingService.GetFeedbackByOrderId(orderId);
