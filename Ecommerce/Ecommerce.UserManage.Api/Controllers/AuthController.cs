@@ -19,11 +19,11 @@ namespace Ecommerce.userManage.Api.Controllers
         public readonly ITokenRepository tokenRepository;
         private readonly IConfiguration configuration;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository,IConfiguration configuration)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.tokenRepository = tokenRepository;
-            this.configuration=configuration;
+            this.configuration = configuration;
 
         }
 
@@ -33,6 +33,13 @@ namespace Ecommerce.userManage.Api.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestcsDto)
         {
+
+            var existingUser = await userManager.FindByNameAsync(registerRequestcsDto.Username);
+            if (existingUser != null)
+            {
+                return BadRequest(new { Message = "You are already in the system" });
+            }
+
             // Create a new IdentityUser based on the provided username and email
             var identityUser = new IdentityUser
             {
@@ -84,11 +91,11 @@ namespace Ecommerce.userManage.Api.Controllers
                     if (roles != null)
                     {
                         //create token
-                        var jwtToken = tokenRepository.CreateJWTtoken (user, roles.ToList());
+                        var jwtToken = tokenRepository.CreateJWTtoken(user, roles.ToList());
 
                         var response = new
                         {
-                            JwtToken = jwtToken
+                            JwtToken = jwtToken.Result
                         };
 
                         return Ok(response);
@@ -113,7 +120,8 @@ namespace Ecommerce.userManage.Api.Controllers
 
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
         {
-            try {
+            try
+            {
                 var user = await userManager.FindByEmailAsync(forgotPasswordDto.Email);  //[userManage].[dbo].[AspNetUsers]
 
                 if (user == null)
@@ -131,15 +139,15 @@ namespace Ecommerce.userManage.Api.Controllers
                 var resetLink = $"{configuration["AppSettings:ClientBaseUrl"]}/reset-password?email={HttpUtility.UrlEncode(user.Email)}&token={encodedToken}";
 
                 // Send email
-                 await SendPasswordResetEmail(user.Email, resetLink);
+                await SendPasswordResetEmail(user.Email, resetLink);
 
                 return Ok(new { Message = "If your email is registered, you will receive a password reset link." });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, new { Message = " An error occurred while processing your request." });
             }
-               
+
 
 
         }
@@ -215,7 +223,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
-        
+
     }
 
 }
