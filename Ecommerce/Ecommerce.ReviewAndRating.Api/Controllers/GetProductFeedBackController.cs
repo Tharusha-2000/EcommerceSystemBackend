@@ -16,11 +16,11 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _reviewAndRatingService = reviewAndRatingService;
         }
 
-        [HttpGet]
+        [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductFeedback(int productId)
         {
             var feedbacks = await _reviewAndRatingService.GetProductFeedback(productId);
             return Ok(feedbacks);
-        }   
+        }    
     }
 }
