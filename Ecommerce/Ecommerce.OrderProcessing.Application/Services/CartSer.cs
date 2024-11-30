@@ -94,5 +94,31 @@ namespace Ecommerce.OrderProcessing.Application.Services
 
             return new OkResult();
         }
+
+
+        public async Task<ActionResult> PutCart(int cartId, int count)
+        {
+            try
+            {
+                var cartrow = await _dbContext.Carts.FindAsync(cartId);
+
+                if (cartrow == null)
+                {
+                    return new NotFoundResult();
+                }
+
+                cartrow.count = count;
+                await _dbContext.SaveChangesAsync();
+
+                return new OkObjectResult(cartrow);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_dbContext.Carts.Any(c => c.cartId == cartId))
+                    return new NotFoundResult();
+
+                throw;
+            }
+        }
     }
 }
