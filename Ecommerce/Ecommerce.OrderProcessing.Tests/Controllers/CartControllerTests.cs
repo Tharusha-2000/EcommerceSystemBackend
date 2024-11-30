@@ -88,10 +88,10 @@ namespace Ecommerce.OrderProcessing.Tests.Controllers
         {
             // Arrange
             var cart = new Cart { cartId = 1, userId = 2, productId = 3, pizzaSize = "Medium", count = 1 };
-            _mockCartService.Setup(s => s.PutCart(1, cart)).ReturnsAsync(new OkResult());
+            _mockCartService.Setup(s => s.PutCart(1, cart.count)).ReturnsAsync(new OkResult());
 
             // Act
-            var result = await _controller.PutCart(1, cart);
+            var result = await _controller.PutCart(1, cart.count);
 
             // Assert
             Assert.IsType<OkResult>(result);
