@@ -2,6 +2,7 @@
 using Ecommerce.userManage.Domain.Models.DTO;
 using Ecommerce.userManage.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,24 @@ namespace Ecommerce.userManage.Application.Service
             }).ToList();
 
             return userDtos;
+        }
+
+        //delete user by id
+        public void deleteUser(int Id)
+        {
+            var userData = _context.Users.Where(x => x.Id == Id).FirstOrDefault();
+            if (userData != null)
+            {
+                _context.Users.Remove(userData);
+                _context.SaveChanges();
+            }
+        }
+
+        //get all users
+        public List<UserModel> getAllUsers()
+        {
+            var userData = _context.Users.ToList();
+            return userData;
         }
 
 

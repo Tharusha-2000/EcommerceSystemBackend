@@ -78,5 +78,35 @@ namespace Ecommerce.userManage.Api.Controllers
         }
 
 
+        [HttpDelete("{Id}")]
+        public IActionResult deleteUser(int Id)
+        {
+            try
+            {
+                _userService.deleteUser(Id);
+                return Ok("user deleted successfully");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult getAllUsers()
+        {
+            try
+            {
+                var userData = _userService.getAllUsers();
+                return Ok(userData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

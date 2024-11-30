@@ -31,32 +31,43 @@ namespace Ecommerce.userManage.Domain.Repositories
         public async Task<string> CreateJWTtoken(IdentityUser user, List<string> roles)
         {
 
-            string userId;
+            string userId,firstName;
             var connectionString = configuration.GetConnectionString("EcommerceConnection");
 
             using (var connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
 
-                var query = "SELECT Id FROM Users WHERE Email = @Email";
+                var query = "SELECT Id,FirstName FROM Users WHERE Email = @Email";
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Email", user.Email);
 
                 // userId = (string)await command.ExecuteScalarAsync();
-                var result = await command.ExecuteScalarAsync();
-                userId = result?.ToString();
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        userId = reader["Id"]?.ToString();
+                        firstName = reader["FirstName"]?.ToString();
+                    }
+                    else
+                    {
+                        throw new Exception("Sorry, we can't find the user you're looking for. The account may have been removed.");
+                    }
+                }
             }
 
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(firstName))
             {
-                throw new Exception("User not found in the custom Users table.");
+                throw new Exception("Required user details are missing.");
             }
 
             //create claims
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                  new Claim(ClaimTypes.NameIdentifier, userId)
+                  new Claim(ClaimTypes.NameIdentifier, userId),
+                   new Claim("FirstName", firstName)
             };
 
             foreach (var role in roles)
