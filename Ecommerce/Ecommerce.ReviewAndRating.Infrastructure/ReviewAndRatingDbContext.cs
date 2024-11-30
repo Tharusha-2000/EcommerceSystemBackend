@@ -12,10 +12,7 @@ namespace Ecommerce.ReviewAndRating.Infrastructure
     {
        public DbSet<Feedback> Feedback { get; set; }
         public DbSet<FeedbackWithProduct> FeedbackWithProduct { get; set; }
-        //public DbSet<Order> Order { get; set; }
-       // public DbSet<OrderProduct> OrderProduct { get; set; }
-
-
+       
         public ReviewAndRatingDbContext(DbContextOptions<ReviewAndRatingDbContext> options) : base(options)
         {
 

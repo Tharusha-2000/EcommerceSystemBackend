@@ -151,10 +151,30 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
                 return feedbackDtos;
             }
+            catch (HttpRequestException ex)
+            {
+                // Handle HTTP request errors
+                throw new ApplicationException("An error occurred while making an HTTP request.", ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Handle database update errors
+                throw new InvalidOperationException("An error occurred while updating the database.", ex);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                // Handle cases where no feedback is found
+                throw new ApplicationException("No feedback found for the given product ID.", ex);
+            }
+            catch (ApplicationException ex)
+            {
+                // Handle application-specific errors
+                throw new ApplicationException(ex.Message, ex);
+            }
             catch (Exception ex)
             {
-                // Handle exceptions
-                throw new ApplicationException("An error occurred while retrieving product feedback.", ex);
+                // Handle any other errors
+                throw new ApplicationException("An unexpected error occurred while retrieving product feedback.", ex);
             }
         }
 
@@ -184,14 +204,33 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 // Handle cases where no feedback is found
                 throw new ApplicationException(ex.Message, ex);
             }
+            catch (DbUpdateException ex)
+            {
+                // Handle database update errors
+                throw new InvalidOperationException("An error occurred while updating the database.", ex);
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Handle invalid operations
+                throw new ApplicationException("An invalid operation occurred while retrieving feedback by Order ID.", ex);
+            }
+            catch (HttpRequestException ex)
+            {
+                // Handle HTTP request errors
+                throw new ApplicationException("An error occurred while making an HTTP request.", ex);
+            }
             catch (Exception ex)
             {
-                // Handle general errors
-                throw new ApplicationException("An error occurred while retrieving feedback by Order ID.", ex);
+                // Handle any other errors
+                throw new ApplicationException("An unexpected error occurred while retrieving feedback by Order ID.", ex);
             }
         }
 
-
+        public async Task<List<Feedback>> GetAllFeedbacks()
+        {
+           var allFeedbacks = await _context.Feedback.ToListAsync();
+            return allFeedbacks;
+        }
     }
 }
 
