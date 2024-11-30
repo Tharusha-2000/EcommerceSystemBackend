@@ -52,7 +52,7 @@ namespace Ecommerce.userManage.Domain.Repositories
                     }
                     else
                     {
-                        throw new Exception("User not found in the custom Users table.");
+                        throw new Exception("Sorry, we can't find the user you're looking for. The account may have been removed.");
                     }
                 }
             }

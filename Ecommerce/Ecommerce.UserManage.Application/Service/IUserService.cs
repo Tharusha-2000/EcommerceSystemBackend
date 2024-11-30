@@ -19,5 +19,9 @@ namespace Ecommerce.userManage.Application.Service
 
         Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds);
 
+        public void deleteUser(int Id);
+
+        public List<UserModel> getAllUsers();
+
     }
 }
