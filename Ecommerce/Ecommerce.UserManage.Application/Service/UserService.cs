@@ -2,6 +2,7 @@
 using Ecommerce.userManage.Domain.Models.DTO;
 using Ecommerce.userManage.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ using System.Threading.Tasks;
 namespace Ecommerce.userManage.Application.Service
 {
 
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
         private readonly UserDbContext _context;
 
-        public UserService (UserDbContext context)
+        public UserService(UserDbContext context)
         {
             _context = context;
         }
@@ -36,6 +37,34 @@ namespace Ecommerce.userManage.Application.Service
             _context.SaveChanges();
         }
 
+
+        public List<UserModel> getUserById(int Id)
+        {
+            var userData = _context.Users.Where(x => x.Id == Id).ToList();
+            return userData;
+        }
+
+        public void updateUser(UserModel userModel)
+        {
+            var userData = _context.Users.Where(x => x.Id == userModel.Id).FirstOrDefault();
+            if (userData != null)
+            {
+                userData.FirstName = userModel.FirstName;
+                userData.LastName = userModel.LastName;
+                userData.Email = userModel.Email;
+                userData.UserType = userModel.UserType;
+                userData.PhoneNo = userModel.PhoneNo;
+                userData.Address = userModel.Address;
+                _context.SaveChanges();
+            }
+        }
+
+        public List<UserModel> getUserByEmail(string email)
+        {
+            var userData = _context.Users.Where(x => x.Email == email).ToList();
+            return userData;
+        }
+
         public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
         {
             if (userIds == null || !userIds.Any())
@@ -51,13 +80,30 @@ namespace Ecommerce.userManage.Application.Service
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                
+
             }).ToList();
 
             return userDtos;
         }
 
+        //delete user by id
+        public void deleteUser(int Id)
+        {
+            var userData = _context.Users.Where(x => x.Id == Id).FirstOrDefault();
+            if (userData != null)
+            {
+                _context.Users.Remove(userData);
+                _context.SaveChanges();
+            }
+        }
+
+        //get all users
+        public List<UserModel> getAllUsers()
+        {
+            var userData = _context.Users.ToList();
+            return userData;
+        }
+
+
     }
 }
-
-

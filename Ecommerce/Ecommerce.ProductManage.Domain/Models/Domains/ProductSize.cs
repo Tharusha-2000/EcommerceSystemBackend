@@ -14,9 +14,6 @@ namespace Ecommerce.ProductManage.Domain.Models.Domains
         [Required]
         public double Price { get; set; }
 
-        [Required]
-        public int Qty { get; set; }
-
         [JsonIgnore]
         public int ProductId { get; set; }
 

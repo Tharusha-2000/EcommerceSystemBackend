@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.ProductManage.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20241120102812_init2")]
-    partial class init2
+    [Migration("20241123084244_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,9 +81,6 @@ namespace Ecommerce.ProductManage.Infrastructure.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
-
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -100,7 +97,6 @@ namespace Ecommerce.ProductManage.Infrastructure.Migrations
                             ProductsizeId = 1,
                             Price = 950.0,
                             ProductId = 1,
-                            Qty = 10,
                             Size = "M"
                         });
                 });

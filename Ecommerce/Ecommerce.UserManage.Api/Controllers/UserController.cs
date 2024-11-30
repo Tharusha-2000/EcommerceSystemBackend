@@ -30,7 +30,83 @@ namespace Ecommerce.userManage.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
-           
+
         }
+        [HttpGet("{Id?}")]
+        public IActionResult getUserById(int Id)
+        {
+            try
+            {
+                var userData = _userService.getUserById(Id);
+                return Ok(userData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult updateUser(UserModel userModel)
+        {
+            try
+            {
+                _userService.updateUser(userModel);
+                return Ok("user updated successfully");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("email/{email?}")]
+        public IActionResult getUserByEmail(string email)
+        {
+            try
+            {
+                var userData = _userService.getUserByEmail(email);
+                return Ok(userData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpDelete("{Id}")]
+        public IActionResult deleteUser(int Id)
+        {
+            try
+            {
+                _userService.deleteUser(Id);
+                return Ok("user deleted successfully");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult getAllUsers()
+        {
+            try
+            {
+                var userData = _userService.getAllUsers();
+                return Ok(userData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

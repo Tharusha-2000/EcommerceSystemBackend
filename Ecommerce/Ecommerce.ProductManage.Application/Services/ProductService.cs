@@ -26,8 +26,7 @@ namespace Ecommerce.ProductManage.Application.Services
                 Sizes = productDto.Sizes.Select(s => new ProductSize
                 {
                     Size = s.Size,
-                    Price = s.Price,
-                    Qty = s.Qty,
+                    Price = s.Price
                 }).ToList(),
             };
 
@@ -73,8 +72,7 @@ namespace Ecommerce.ProductManage.Application.Services
             existingProduct.Sizes = productDto.Sizes.Select(s => new ProductSize
             {
                 Price = s.Price,
-                Size = s.Size,
-                Qty = s.Qty,
+                Size = s.Size
             }).ToList();
 
             await _context.SaveChangesAsync();

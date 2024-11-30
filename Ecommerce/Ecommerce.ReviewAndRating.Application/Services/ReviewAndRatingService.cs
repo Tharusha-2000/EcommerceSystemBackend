@@ -156,7 +156,41 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                 // Handle exceptions
                 throw new ApplicationException("An error occurred while retrieving product feedback.", ex);
             }
-        }  
+        }
+
+        public async Task<FeedbackResponseDto> GetFeedbackByOrderId(int orderId)
+        {
+            try
+            {
+                // Retrieve the feedback details from the database
+                var feedback = await _context.Feedback
+                    .Where(f => f.OrderId == orderId)
+                    .Select(f => new FeedbackResponseDto
+                    {
+                        FeedbackMessage = f.FeedbackMessage,
+                        Rate = f.Rate
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (feedback == null)
+                {
+                    throw new KeyNotFoundException($"No feedback found for Order ID: {orderId}");
+                }
+
+                return feedback;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                // Handle cases where no feedback is found
+                throw new ApplicationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                // Handle general errors
+                throw new ApplicationException("An error occurred while retrieving feedback by Order ID.", ex);
+            }
+        }
+
 
     }
 }
