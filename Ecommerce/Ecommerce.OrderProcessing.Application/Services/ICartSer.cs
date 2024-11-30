@@ -9,7 +9,11 @@ namespace Ecommerce.OrderProcessing.API.Controllers
         Task<ActionResult<Cart>> GetCartById(int cartId);
         Task<ActionResult<IEnumerable<Cart>>> GetCartsByUserId(int userId);
         Task<ActionResult<Cart>> PostCart(Cart cart);
-        Task<ActionResult> PutCart(int cartId, Cart cart);
+
+        //Task<ActionResult> PutCart(int cartId, Cart cart);
+
         Task<ActionResult> DeleteCart(int cartId);
+
+        Task<ActionResult> PutCart(int cartId, int count);
     }
 }

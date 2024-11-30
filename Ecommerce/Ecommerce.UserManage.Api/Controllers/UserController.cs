@@ -77,6 +77,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
+
         [HttpDelete("{Id}")]
         public IActionResult deleteUser(int Id)
         {
@@ -106,5 +107,6 @@ namespace Ecommerce.userManage.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }
