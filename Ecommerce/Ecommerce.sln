@@ -31,9 +31,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.OrderProcessing.Domain", "Ecommerce.OrderProcessing.Domain\Ecommerce.OrderProcessing.Domain.csproj", "{A6CB508D-0897-40EF-91BA-9A4F4450ED79}"
 
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.OrderProcessing.Infrastructure", "Ecommerce.OrderProcessing.Infrastructure\Ecommerce.OrderProcessing.Infrastructure.csproj", "{CC2058A5-0E01-477B-A4C9-130FF028BBBF}"
-
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductManage", "ProductManage", "{24869C87-7EF3-4B1A-B70B-78F72A79E39E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.ProductManage.Api", "Ecommerce.ProductManage.Api\Ecommerce.ProductManage.Api.csproj", "{BECCBD75-75DB-45D4-99CD-083A2058DAE4}"
