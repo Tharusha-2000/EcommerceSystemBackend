@@ -226,7 +226,11 @@ namespace Ecommerce.ReviewAndRating.Application.Services
             }
         }
 
-
+        public async Task<List<Feedback>> GetAllFeedbacks()
+        {
+           var allFeedbacks = await _context.Feedback.ToListAsync();
+            return allFeedbacks;
+        }
     }
 }
 

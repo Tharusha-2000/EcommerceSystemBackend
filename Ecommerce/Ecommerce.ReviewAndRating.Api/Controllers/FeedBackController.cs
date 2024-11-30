@@ -37,5 +37,12 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             await _reviewAndRatingService.SaveProductFeedback(feedbackDto);
             return Ok();
         }
+
+        [HttpGet("GetAllFeedbacks")]
+        public async Task<IActionResult> GetAllFeedbacks()
+        {
+            var allFeedbacks = await _reviewAndRatingService.GetAllFeedbacks();
+            return Ok(allFeedbacks);
+        }
     }
 }
