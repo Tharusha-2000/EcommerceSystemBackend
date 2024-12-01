@@ -14,5 +14,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
         Task<List<DisplayFeedbackDto>> GetProductFeedback(int productId);
 
         Task<FeedbackResponseDto> GetFeedbackByOrderId(int orderId);
+
+        Task<List<Feedback>> GetAllFeedbacks();
     }
 }

@@ -58,7 +58,6 @@ namespace Ecommerce.OrderProcessing.Application.Services
             return new CreatedAtActionResult(nameof(GetCartById), null, new { cartId = cart.cartId }, cart);
         }
 
-       
 
         public async Task<ActionResult> DeleteCart(int cartId)
         {
