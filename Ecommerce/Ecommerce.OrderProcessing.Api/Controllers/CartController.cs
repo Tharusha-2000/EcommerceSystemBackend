@@ -46,7 +46,6 @@ namespace Ecommerce.OrderProcessing.API.Controllers
         //    return await _cartService.PutCart(cartId, cart);
         //}
 
-
         [HttpDelete("{cartId}")]
         public async Task<ActionResult> DeleteCart(int cartId)
         {
