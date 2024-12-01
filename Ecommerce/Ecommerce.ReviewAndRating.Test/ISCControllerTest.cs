@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.ReviewAndRating.Test
 {
-    public class GetUsersByIdsAsyncControllerTest
+    internal class ISCControllerTest
     {
     }
 }

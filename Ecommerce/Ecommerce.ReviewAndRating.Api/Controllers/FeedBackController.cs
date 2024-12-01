@@ -17,6 +17,13 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _reviewAndRatingService = reviewAndRatingService;
         }
 
+        [HttpGet("GetAllFeedbacks")]
+        public async Task<IActionResult> GetAllFeedbacks()
+        {
+            var allFeedbacks = await _reviewAndRatingService.GetAllFeedbacks();
+            return Ok(allFeedbacks);
+        }
+
         [HttpGet("GetProductFeedback/{productId:int}")]
         public async Task<IActionResult> GetProductFeedback(int productId)
         {
@@ -34,15 +41,15 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
         [HttpPost("SaveProductFeedback")]
         public async Task<IActionResult> SaveProductFeedback(FeedbackRequestDto feedbackDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await _reviewAndRatingService.SaveProductFeedback(feedbackDto);
             return Ok();
         }
 
-        [HttpGet("GetAllFeedbacks")]
-        public async Task<IActionResult> GetAllFeedbacks()
-        {
-            var allFeedbacks = await _reviewAndRatingService.GetAllFeedbacks();
-            return Ok(allFeedbacks);
-        }
+        
     }
 }
