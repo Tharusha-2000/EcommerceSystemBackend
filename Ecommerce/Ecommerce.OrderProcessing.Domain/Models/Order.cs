@@ -14,17 +14,15 @@ namespace Ecommerce.OrderProcessing.Domain.Models
         [Key]
         public int orderId { get; set; }
         public int userId { get; set; }
+        public string fName { get; set; }
+        public string lName { get; set; }
+        public string email { get; set; }
         public float totalPrice { get; set; }
-        public string paymentMethod { get; set; }
-        public string type { get; set; }
-        public string street { get; set; }
-        public string city { get; set; }
-        public string province { get; set; }
-        public string country { get; set; }
         public int postalcode { get; set; }
+        public string address { get; set; }
         public string phoneNum { get; set; }
         public bool paymentStatus { get; set; }
         public string OrderStatus { get; set; }
-        public string Date { get; set; } 
+        public string Date { get; set; }
     }
 }
