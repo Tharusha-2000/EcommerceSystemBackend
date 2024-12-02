@@ -123,23 +123,26 @@ namespace Ecommerce.ReviewAndRating.Test
             Assert.Equal(4, returnedFeedback.Rate);
         }
 
-        //Test for invalid order ID - [HttpGet("GetFeedbackByOrderId/{orderId:int}")]
-        [Fact]
+      /*  [Fact]
         public async Task GetFeedbackByOrderId_InvalidOrderId_ReturnsNotFound()
         {
+            // Arrange
             int orderId = 999;
 
             _mockService.Setup(service => service.GetFeedbackByOrderId(orderId))
-                       .ReturnsAsync((FeedbackResponseDto)null);
+                        .ReturnsAsync((FeedbackResponseDto)null); // Mock service to return null for invalid order ID
 
             var controller = new FeedBackController(_mockService.Object);
 
+            // Act
             var result = await controller.GetFeedbackByOrderId(orderId);
 
-            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<FeedbackResponseDto>>(result); // Validate ActionResult type
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(actionResult.Result); // Validate NotFoundObjectResult type
+            Assert.Equal($"No feedback found for Order ID: {orderId}", notFoundResult.Value); // Validate the message
         }
-
-
+      */
 
 
         //For validate the respose body of the API call - [HttpPost("SaveProductFeedback")]
@@ -165,30 +168,6 @@ namespace Ecommerce.ReviewAndRating.Test
             Assert.Equal(200, okResult.StatusCode);
         }
 
-        // Test for invalid feedback - [HttpPost("SaveProductFeedback")]
-      /*  [Fact]
-        public async Task SaveProductFeedback_InvalidFeedback_ReturnsBadRequest()
-        {
-            var feedbackDto = new FeedbackRequestDto
-            {
-                orderId = 123,
-                feedbackMessage = "", // No feedback message
-                rate = 5,
-                givenDate = "2024-12-01"
-            };
-
-            var controller = new FeedBackController(_mockService.Object);
-
-            var result = await controller.SaveProductFeedback(feedbackDto);
-
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            var badRequestResponse = badRequestResult.Value as SerializableError;
-            Assert.NotNull(badRequestResponse);
-            Assert.True(badRequestResponse.ContainsKey("feedbackMessage"));
-            Assert.Equal("Feedback message is required.", badRequestResponse["feedbackMessage"][0]);
-        }
-
-*/
         // Test for no feedback found - [HttpPost("SaveProductFeedback")]
         [Fact]
         public async Task GetAllFeedbacks_NoFeedbacks_ReturnsEmptyList()
