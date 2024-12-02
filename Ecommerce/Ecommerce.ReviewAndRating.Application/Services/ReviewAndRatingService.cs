@@ -191,18 +191,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
                         Rate = f.Rate
                     })
                     .FirstOrDefaultAsync();
-
-                if (feedback == null)
-                {
-                    throw new KeyNotFoundException($"No feedback found for Order ID: {orderId}");
-                }
-
                 return feedback;
-            }
-            catch (KeyNotFoundException ex)
-            {
-                // Handle cases where no feedback is found
-                throw new ApplicationException(ex.Message, ex);
             }
             catch (DbUpdateException ex)
             {
