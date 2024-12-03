@@ -38,7 +38,8 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
 
             if (feedback == null)
             {
-                return NotFound($"No feedback found for Order ID: {orderId}");
+                return NotFound();
+
             }
             return Ok(feedback);
         }

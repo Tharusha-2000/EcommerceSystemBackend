@@ -26,6 +26,8 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             catch (ApplicationException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+                
+
             }
             catch (Exception ex)
             {

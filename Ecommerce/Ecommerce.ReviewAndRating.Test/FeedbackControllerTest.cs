@@ -4,21 +4,20 @@ using Ecommerce.ReviewAndRating.Domain.DTOs;
 using Ecommerce.ReviewAndRating.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Ecommerce.ReviewAndRating.Test
 {
     public class FeedbackControllerTest
     {
         private readonly Mock<IReviewAndRatingService> _mockService;
+        private readonly FeedBackController _controller;
+
 
         public FeedbackControllerTest()
         {
             _mockService = new Mock<IReviewAndRatingService>();
+            _controller = new FeedBackController(_mockService.Object);
         }
 
         //For validate the respose body of the API call -  [HttpGet("GetAllFeedbacks")]
@@ -26,6 +25,7 @@ namespace Ecommerce.ReviewAndRating.Test
         public async Task GetAllFeedbacksTest()
         {
             var feedbackList = new List<Feedback>
+
     {
         new Feedback { FeedbackId = 1, FeedbackMessage = "Excellent!", Rate = 5, GivenDate = "2024-12-01" },
         new Feedback { FeedbackId = 2, FeedbackMessage = "Not bad food", Rate = 3, GivenDate = "2024-12-02" }
@@ -34,9 +34,7 @@ namespace Ecommerce.ReviewAndRating.Test
             _mockService.Setup(service => service.GetAllFeedbacks())
                        .ReturnsAsync(feedbackList);
 
-            var controller = new FeedBackController(_mockService.Object);
-
-            var result = await controller.GetAllFeedbacks();
+            var result = await _controller.GetAllFeedbacks();
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedFeedbacks = Assert.IsType<List<Feedback>>(okResult.Value);
@@ -58,11 +56,8 @@ namespace Ecommerce.ReviewAndRating.Test
 
             _mockService.Setup(service => service.GetProductFeedback(productId))
                        .ReturnsAsync(feedbackList);
-
-            var controller = new FeedBackController(_mockService.Object);
-
            
-            var result = await controller.GetProductFeedback(productId);
+            var result = await _controller.GetProductFeedback(productId);
 
            
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -89,9 +84,7 @@ namespace Ecommerce.ReviewAndRating.Test
             _mockService.Setup(service => service.GetFeedbackByOrderId(orderId))
                        .ReturnsAsync(feedbackResponse);
 
-            var controller = new FeedBackController(_mockService.Object);
-
-            var result = await controller.GetFeedbackByOrderId(orderId);
+            var result = await _controller.GetFeedbackByOrderId(orderId);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedFeedback = Assert.IsType<FeedbackResponseDto>(okResult.Value);
@@ -113,9 +106,7 @@ namespace Ecommerce.ReviewAndRating.Test
             _mockService.Setup(service => service.GetFeedbackByOrderId(orderId))
                        .ReturnsAsync(feedback);
 
-            var controller = new FeedBackController(_mockService.Object);
-
-            var result = await controller.GetFeedbackByOrderId(orderId);
+            var result = await _controller.GetFeedbackByOrderId(orderId);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedFeedback = Assert.IsType<FeedbackResponseDto>(okResult.Value);
@@ -132,10 +123,8 @@ namespace Ecommerce.ReviewAndRating.Test
             _mockService.Setup(service => service.GetFeedbackByOrderId(orderId))
                         .ReturnsAsync((FeedbackResponseDto)null); // Mock service to return null for invalid order ID
 
-            var controller = new FeedBackController(_mockService.Object);
 
-            // Act
-            var result = await controller.GetFeedbackByOrderId(orderId);
+            var result = await _controller.GetFeedbackByOrderId(orderId);
 
             // Assert
             var actionResult = Assert.IsType<ActionResult<FeedbackResponseDto>>(result); // Validate ActionResult type
@@ -143,7 +132,6 @@ namespace Ecommerce.ReviewAndRating.Test
             Assert.Equal($"No feedback found for Order ID: {orderId}", notFoundResult.Value); // Validate the message
         }
       */
-
 
         //For validate the respose body of the API call - [HttpPost("SaveProductFeedback")]
         [Fact]
@@ -160,9 +148,7 @@ namespace Ecommerce.ReviewAndRating.Test
             _mockService.Setup(service => service.SaveProductFeedback(It.IsAny<FeedbackRequestDto>()))
                        .Returns(Task.CompletedTask);
 
-            var controller = new FeedBackController(_mockService.Object);
-
-            var result = await controller.SaveProductFeedback(feedbackDto);
+            var result = await _controller.SaveProductFeedback(feedbackDto);
 
             var okResult = Assert.IsType<OkResult>(result);
             Assert.Equal(200, okResult.StatusCode);
@@ -175,9 +161,7 @@ namespace Ecommerce.ReviewAndRating.Test
             _mockService.Setup(service => service.GetAllFeedbacks())
                        .ReturnsAsync(new List<Feedback>());
 
-            var controller = new FeedBackController(_mockService.Object);
-
-            var result = await controller.GetAllFeedbacks();
+            var result = await _controller.GetAllFeedbacks();
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnedFeedbacks = Assert.IsType<List<Feedback>>(okResult.Value);
