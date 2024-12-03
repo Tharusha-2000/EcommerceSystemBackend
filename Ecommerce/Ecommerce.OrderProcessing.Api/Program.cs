@@ -3,22 +3,11 @@ using Ecommerce.OrderProcessing.Application.Services;
 using Ecommerce.OrderProcessing.Infras;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Configuration.AddJsonFile("appsettings.json");
-
-// Add services to the container.
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigins", policy =>
-    {
-        policy.WithOrigins("http://localhost:5173") // Replace with your client URL
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -33,7 +22,7 @@ builder.Services.AddScoped<EcommerceDbContext>();
 builder.Services.AddScoped<ICartSer, CartSer>();
 builder.Services.AddScoped<IOrderSer, OrderSer>();
 builder.Services.AddScoped<IOrderProductSer, OrderProductSer>();
-
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 builder.Services.AddCors(options =>
 {
@@ -72,7 +61,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
 app.UseHttpsRedirection();
+
 
 app.UseCors("AllowSpecificOrigins");
 

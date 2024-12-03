@@ -51,14 +51,8 @@ namespace Ecommerce.OrderProcessing.API.Controllers
         //    return await _cartService.PutCart(cartId, cart);
         //}
 
-        [Authorize(Roles = "customer")]
-        [HttpPut("{cartId}")]
-        public async Task<ActionResult> PutCart(int cartId,int count)
-        {
-            return await _cartService.PutCart(cartId, count);
-        }
+   
 
-        [Authorize(Roles = "customer")]
         [HttpDelete("{cartId}")]
         public async Task<ActionResult> DeleteCart(int cartId)
         {
@@ -70,5 +64,6 @@ namespace Ecommerce.OrderProcessing.API.Controllers
         {
             return await _cartService.PutCart(cartId, count);
         }
+
     }
 }

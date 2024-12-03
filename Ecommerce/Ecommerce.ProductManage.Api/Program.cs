@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:5173") // Replace with your client URL
+        policy.WithOrigins("http://localhost:5174") // Replace with your client URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -38,6 +38,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
+
 
 
 
@@ -71,6 +84,7 @@ app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("AllowLocalhost");
 
 app.MapControllers();
 
