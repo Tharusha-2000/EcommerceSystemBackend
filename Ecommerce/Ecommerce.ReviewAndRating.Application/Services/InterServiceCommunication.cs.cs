@@ -19,7 +19,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
         public async Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds)
         {
-            var apiUrl = "https://localhost:7242/api/GetOrdersById/batch"; // Replace with actual endpoint
+            var apiUrl = "https://localhost:7242/api/GetOrdersById/batch"; 
 
             var response = await _httpClient.PostAsJsonAsync(apiUrl, orderIds);
 
@@ -33,7 +33,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
         public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
         {
-            var apiUrl = "https://localhost:7087/api/GetUsersByIds/batch"; // Replace with actual endpoint
+            var apiUrl = "http://localhost:8080/api/GetUsersByIds/batch";
 
             var response = await _httpClient.PostAsJsonAsync(apiUrl, userIds);
 
@@ -48,7 +48,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
         public async Task<List<int>> GetProductIdFromOrderServicesAsync(int orderId)
         {
-            // Replace with the actual base URL of the OrderProduct service
+            // base URL of the OrderProduct service
             var orderServiceBaseUrl = "https://localhost:7242/api/OrderProduct";
             var url = $"{orderServiceBaseUrl}/byOrder/{orderId}";
 

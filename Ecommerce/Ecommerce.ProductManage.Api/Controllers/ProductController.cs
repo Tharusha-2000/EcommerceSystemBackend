@@ -17,9 +17,10 @@ namespace Ecommerce.ProductManage.Api.Controllers
         }
 
         [HttpGet("GetAllProducts")]
-        public async Task<ActionResult<List<Product>>> GetAllProductsAsync()
+        public async Task<ActionResult<List<Product>>> GetAllProductsAsync([FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] string? categories)
         {
-            var products = await _ProductService.GetAllProductsAsync();
+            var categoryList = categories?.Split(',')?.ToList();
+            var products = await _ProductService.GetAllProductsAsync(minPrice, maxPrice, categoryList);
 
             return Ok(products);
         }
@@ -115,6 +116,19 @@ namespace Ecommerce.ProductManage.Api.Controllers
             }
 
             return Ok(product);
+        }
+
+        [HttpDelete("{productId:int}")]
+        public async Task<ActionResult> DeleteProdcutAsync(int productId)
+        {
+            var deletedProduct = await _ProductService.DeleteProductAsync(productId);
+
+            if (deletedProduct == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }
