@@ -16,5 +16,7 @@ namespace Ecommerce.OrderProcessing.API.Controllers
         Task<ActionResult> DeleteOrder(int orderId);
 
         Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds);
+
+        Task<ActionResult> PutOrderPaymentStatus (int orderId, bool paymentStatus);
     }
 }

@@ -35,9 +35,11 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
         public async Task<IActionResult> GetFeedbackByOrderId(int orderId)
         {
             var feedback = await _reviewAndRatingService.GetFeedbackByOrderId(orderId);
+
             if (feedback == null)
             {
                 return NotFound();
+
             }
             return Ok(feedback);
         }

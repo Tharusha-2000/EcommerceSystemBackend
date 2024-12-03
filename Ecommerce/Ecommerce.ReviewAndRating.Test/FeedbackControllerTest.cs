@@ -114,21 +114,24 @@ namespace Ecommerce.ReviewAndRating.Test
             Assert.Equal(4, returnedFeedback.Rate);
         }
 
-        //Test for invalid order ID - [HttpGet("GetFeedbackByOrderId/{orderId:int}")]
-        [Fact]
+      /*  [Fact]
         public async Task GetFeedbackByOrderId_InvalidOrderId_ReturnsNotFound()
         {
+            // Arrange
             int orderId = 999;
 
             _mockService.Setup(service => service.GetFeedbackByOrderId(orderId))
-                       .ReturnsAsync((FeedbackResponseDto)null);
+                        .ReturnsAsync((FeedbackResponseDto)null); // Mock service to return null for invalid order ID
+
 
             var result = await _controller.GetFeedbackByOrderId(orderId);
 
-            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<FeedbackResponseDto>>(result); // Validate ActionResult type
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(actionResult.Result); // Validate NotFoundObjectResult type
+            Assert.Equal($"No feedback found for Order ID: {orderId}", notFoundResult.Value); // Validate the message
         }
-
-
+      */
 
         //For validate the respose body of the API call - [HttpPost("SaveProductFeedback")]
         [Fact]

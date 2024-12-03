@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:5173") // Replace with your client URL
+        policy.WithOrigins("http://localhost:5174") // Replace with your client URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -35,6 +35,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,6 +62,7 @@ app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigins");
 
 app.UseAuthorization();
+app.UseCors("AllowLocalhost");
 
 app.MapControllers();
 
