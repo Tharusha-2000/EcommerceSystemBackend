@@ -26,6 +26,31 @@ namespace Ecommerce.ProductManage.Api.Controllers
             return Ok(products);
         }
 
+        [HttpGet("GetProductPriceBySize/{productId}")]
+        public async Task<ActionResult<List<Product>>> GetProductPriceBySizeAsync([FromRoute] int productId, [FromQuery] string size)
+        {
+            var product = await _ProductService.GetProductByIdAsync(productId);
+
+            if (product == null) 
+            {
+                return NotFound("No product for this productId");
+            }
+
+            if (!string.IsNullOrEmpty(size)) 
+            {
+                var sizeWithPrice = product.Sizes.FirstOrDefault(x=>x.Size.Equals(size,StringComparison.OrdinalIgnoreCase));
+
+                if (sizeWithPrice != null) 
+                {
+                    return Ok(sizeWithPrice.Price);
+                }
+
+                return NotFound("Size provided is not applicable for this product");
+            }
+
+            return BadRequest();
+        }
+
         [HttpGet("GetProductById/{productId:int}")]
         public async Task<ActionResult<Product?>> GetProductByIdAsync([FromRoute] int productId)
         {

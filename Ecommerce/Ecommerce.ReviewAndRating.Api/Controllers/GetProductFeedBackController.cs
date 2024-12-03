@@ -18,11 +18,11 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
         }
 
         [Authorize(Roles = "customer,admin")]
-        [HttpGet]
+        [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductFeedback(int productId)
         {
             var feedbacks = await _reviewAndRatingService.GetProductFeedback(productId);
             return Ok(feedbacks);
-        }   
+        }    
     }
 }

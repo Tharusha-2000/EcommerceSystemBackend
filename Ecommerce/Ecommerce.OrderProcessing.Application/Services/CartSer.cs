@@ -58,16 +58,17 @@ namespace Ecommerce.OrderProcessing.Application.Services
             return new CreatedAtActionResult(nameof(GetCartById), null, new { cartId = cart.cartId }, cart);
         }
 
-        public async Task<ActionResult> PutCart(int cartId, Cart cart)
+        public async Task<ActionResult> PutCart(int cartId, int count)
         {
-            if (cartId != cart.cartId)
-                return new BadRequestResult();
+            try{
+            var cartrow = await _dbContext.Carts.FindAsync(cartId);
 
-            _dbContext.Entry(cart).State = EntityState.Modified;
+            if (cartrow == null){
+                return new NotFoundResult();
+            }
 
-            try
-            {
-                await _dbContext.SaveChangesAsync();
+            cartrow.count = count;
+            await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -93,6 +94,32 @@ namespace Ecommerce.OrderProcessing.Application.Services
             await _dbContext.SaveChangesAsync();
 
             return new OkResult();
+        }
+
+
+        public async Task<ActionResult> PutCart(int cartId, int count)
+        {
+            try
+            {
+                var cartrow = await _dbContext.Carts.FindAsync(cartId);
+
+                if (cartrow == null)
+                {
+                    return new NotFoundResult();
+                }
+
+                cartrow.count = count;
+                await _dbContext.SaveChangesAsync();
+
+                return new OkObjectResult(cartrow);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_dbContext.Carts.Any(c => c.cartId == cartId))
+                    return new NotFoundResult();
+
+                throw;
+            }
         }
     }
 }
