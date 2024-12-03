@@ -1,4 +1,5 @@
 ﻿using Ecommerce.ReviewAndRating.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _reviewAndRatingService = reviewAndRatingService;
         }
 
+        [Authorize(Roles = "customer,admin")]
         [HttpGet]
         public async Task<IActionResult> GetProductFeedback(int productId)
         {

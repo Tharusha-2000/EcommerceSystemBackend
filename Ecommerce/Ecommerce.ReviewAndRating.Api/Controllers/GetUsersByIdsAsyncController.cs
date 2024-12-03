@@ -1,4 +1,5 @@
 ﻿using Ecommerce.ReviewAndRating.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
         }
 
 
-
+        [Authorize(Roles = "customer,admin")]
         [HttpPost("batch")]
         public async Task<IActionResult> GetUsersByIds([FromBody] List<int> userIds)
         {

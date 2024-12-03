@@ -1,4 +1,5 @@
 ﻿using Ecommerce.ReviewAndRating.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _interServiceCommunication = interServiceCommunication;
         }
 
+        [Authorize(Roles = "customer,admin")]
         [HttpPost("batch")]
         public async Task<IActionResult> GetOrdersByIds([FromBody] List<int> orderIds)
         {

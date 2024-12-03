@@ -1,6 +1,7 @@
 ﻿using Ecommerce.ReviewAndRating.Application.Services;
 using Ecommerce.ReviewAndRating.Domain.DTOs;
 using Ecommerce.ReviewAndRating.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _reviewAndRatingService = reviewAndRatingService;
         }
 
+        [Authorize(Roles = "customer,admin")]
         [HttpPost]
         public async Task<IActionResult> SaveProductFeedback(FeedbackRequestDto feedbackDto)
         {
