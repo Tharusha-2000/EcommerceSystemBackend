@@ -16,7 +16,7 @@ namespace Ecommerce.OrderProcessing.API.Controllers
             _cartService = cartService;
         }
 
-       // [Authorize(Roles = "customer")]
+       [Authorize(Roles = "customer")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cart>>> GetCarts()
         {
