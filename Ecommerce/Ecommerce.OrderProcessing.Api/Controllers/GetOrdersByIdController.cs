@@ -17,7 +17,7 @@ namespace Ecommerce.OrderProcessing.Api.Controllers
             _orderService = orderService;
         }
 
-        [Authorize(Roles = "customer")]
+        
         [HttpPost("batch")]
         public async Task<ActionResult<List<OrderDto>>> GetOrdersByIdsAsync([FromBody] List<int> orderIds)
         {

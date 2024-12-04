@@ -148,8 +148,6 @@ namespace Ecommerce.userManage.Api.Controllers
                 return StatusCode(500, new { Message = " An error occurred while processing your request." });
             }
 
-
-
         }
 
 

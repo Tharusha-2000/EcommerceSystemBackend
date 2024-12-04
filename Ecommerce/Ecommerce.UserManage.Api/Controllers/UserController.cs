@@ -34,7 +34,7 @@ namespace Ecommerce.userManage.Api.Controllers
 
         }
 
-        [Authorize(Roles = "customer,admin")]
+       
         [HttpGet("{Id?}")]
         public IActionResult getUserById(int Id)
         {
@@ -50,7 +50,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "customer,admin")]
+        [Authorize(Roles = "customer,Admin")]
         [HttpPut]
         public IActionResult updateUser(UserModel userModel)
         {
@@ -66,7 +66,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
-        [Authorize(Roles ="customer,admin")]
+        [Authorize(Roles ="customer,Admin")]
         [HttpGet("email/{email?}")]
         public IActionResult getUserByEmail(string email)
         {
@@ -82,7 +82,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{Id}")]
         public IActionResult deleteUser(int Id)
         {
@@ -98,7 +98,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult getAllUsers()
         {
