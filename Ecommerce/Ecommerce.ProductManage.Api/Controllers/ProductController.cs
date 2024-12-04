@@ -85,6 +85,7 @@ namespace Ecommerce.ProductManage.Api.Controllers
             return Ok(productsByCategory);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateProductAsync")]
         public async Task<ActionResult> CreateProductAsync([FromBody] ProductDto productDto)
         {
@@ -102,7 +103,7 @@ namespace Ecommerce.ProductManage.Api.Controllers
             return Ok(product);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateProductAsync/{productId:int}")]
         public async Task<ActionResult> UpdateProductAsync(int productId, [FromBody] ProductDto productDto)
         {
@@ -121,6 +122,7 @@ namespace Ecommerce.ProductManage.Api.Controllers
             return Ok(product);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{productId:int}")]
         public async Task<ActionResult> DeleteProdcutAsync(int productId)
         {

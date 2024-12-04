@@ -12,7 +12,7 @@ public class PaymentController : ControllerBase
         _paymentService = paymentService;
     }
 
-    [Authorize(Roles = "customer,admin")]
+    [Authorize(Roles = "customer,Admin")]
     [HttpPost("create-payment-intent")]
     public IActionResult CreatePaymentIntent([FromBody] PaymentIntentRequest request)
     {

@@ -16,7 +16,7 @@ namespace Ecommerce.OrderProcessing.API.Controllers
             _cartService = cartService;
         }
 
-        [Authorize(Roles = "customer")]
+       // [Authorize(Roles = "customer")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cart>>> GetCarts()
         {
@@ -30,7 +30,7 @@ namespace Ecommerce.OrderProcessing.API.Controllers
             return await _cartService.GetCartById(cartId);
         }
 
-        [Authorize(Roles = "customer")]
+      //  [Authorize(Roles = "customer")]
         [HttpGet("byUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Cart>>> GetCartsByUserId(int userId)
         {
