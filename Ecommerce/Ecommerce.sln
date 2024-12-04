@@ -48,6 +48,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.ReviewAndRating.Test", "Ecommerce.ReviewAndRating.Test\Ecommerce.ReviewAndRating.Test.csproj", "{F34AAE2E-B359-40FC-B110-1ACDD4B932FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.APIGateway", "Ecommerce.APIGateway\Ecommerce.APIGateway.csproj", "{93E46EB1-89A2-4151-9097-8EE42508E9DB}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
