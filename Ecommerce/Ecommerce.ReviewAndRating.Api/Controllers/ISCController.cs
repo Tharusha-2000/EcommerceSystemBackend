@@ -1,4 +1,5 @@
 ﻿using Ecommerce.ReviewAndRating.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _interServiceCommunication = interServiceCommunication;
         }
 
+        [Authorize(Roles = "customer, Admin")]
         [HttpPost("GetOrdersByIds/batch")]
         public async Task<IActionResult> GetOrdersByIds([FromBody] List<int> orderIds)
         {
@@ -26,6 +28,8 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             catch (ApplicationException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+                
+
             }
             catch (Exception ex)
             {
@@ -33,6 +37,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "customer, Admin")]
         [HttpPost("GetUsersByIds/batch")]
         public async Task<IActionResult> GetUsersByIds([FromBody] List<int> userIds)
         {

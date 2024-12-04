@@ -1,5 +1,6 @@
 ﻿using Ecommerce.ReviewAndRating.Application.Services;
 using Ecommerce.ReviewAndRating.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             _reviewAndRatingService = reviewAndRatingService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllFeedbacks")]
         public async Task<IActionResult> GetAllFeedbacks()
         {
@@ -31,6 +33,7 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
             return Ok(feedbacks);
         }
 
+        [Authorize(Roles = "customer, Admin")]
         [HttpGet("GetFeedbackByOrderId/{orderId:int}")]
         public async Task<IActionResult> GetFeedbackByOrderId(int orderId)
         {
@@ -38,11 +41,13 @@ namespace Ecommerce.ReviewAndRating.Api.Controllers
 
             if (feedback == null)
             {
-                return NotFound($"No feedback found for Order ID: {orderId}");
+                return NotFound(new { Message = $"No feedback found for Order ID: {orderId}" });
+
             }
             return Ok(feedback);
         }
 
+        [Authorize(Roles = "customer")]
         [HttpPost("SaveProductFeedback")]
         public async Task<IActionResult> SaveProductFeedback(FeedbackRequestDto feedbackDto)
         {

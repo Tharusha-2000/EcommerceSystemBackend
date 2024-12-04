@@ -1,6 +1,8 @@
 using Ecommerce.ReviewAndRating.Application.Services;
 using Ecommerce.ReviewAndRating.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +13,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Add services to the container.
+// Add HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
 
+// Add services to the container.
 builder.Services.AddScoped<IReviewAndRatingService, ReviewAndRatingService>();
 builder.Services.AddScoped<IInterServiceCommunication, InterServiceCommunication>();
 builder.Services.AddHttpClient<IInterServiceCommunication, InterServiceCommunication>();
@@ -48,6 +52,23 @@ builder.Services.AddCors(options =>
                .AllowAnyMethod();
     });
 });
+
+
+// Add JWT authentication configuration
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["jwt:Issuer"],
+            ValidAudience = builder.Configuration["jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:Key"]))
+        };
+    });
 
 
 var app = builder.Build();
