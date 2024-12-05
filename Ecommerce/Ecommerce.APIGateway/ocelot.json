@@ -1,0 +1,393 @@
+{
+  "Routes": [
+
+    // Product Web API ========================================================================================================================
+    {
+      "UpstreamPathTemplate": "/api/Product",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Update" ],
+
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7273
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Product",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/Product/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ,"Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7273
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+
+    // Order Web API ==========================================================================================================================
+    {
+      "UpstreamPathTemplate": "/api/Cart",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Cart",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/Cart/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Cart/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/Order",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Order",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/Order/byOrderId/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Order/byOrderId/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    
+    {
+      "UpstreamPathTemplate": "/api/Order/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Order/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/Payment/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Payment/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/OrderProduct",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/OrderProduct",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/OrderProduct/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/OrderProduct/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    
+
+
+    // Review and Rating Web API =============================================================================================================
+    {
+      "UpstreamPathTemplate": "/api/FeedBack",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7046
+        }
+      ],
+      "DownstreamPathTemplate": "/api/FeedBack",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/FeedBack/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7046
+        }
+      ],
+      "DownstreamPathTemplate": "/api/FeedBack/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+
+
+
+
+    // UserManage Web API =====================================================================================================================
+    {
+      "UpstreamPathTemplate": "/api/Auth/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Auth/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+   
+    {
+      "UpstreamPathTemplate": "/api/GetUsersByIds",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/GetUsersByIds",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/User",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/User",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/User/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/User/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    }
+  ],
+
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7000"
+  }
+}
