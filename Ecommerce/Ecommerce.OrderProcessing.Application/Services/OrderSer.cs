@@ -118,5 +118,23 @@ namespace Ecommerce.OrderProcessing.API.Controllers
             return orders;
         }
 
+        public async Task<ActionResult> PutOrderPaymentStatus (int orderId, bool paymentStatus)
+        {
+            try
+            {
+                var order = await _dbContext.Orders.FindAsync(orderId);
+                if (order == null)
+                    return new NotFoundResult();
+                order.paymentStatus = paymentStatus;
+                await _dbContext.SaveChangesAsync();
+                return new OkResult();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_dbContext.Orders.Any(o => o.orderId == orderId))
+                    return new NotFoundResult();
+                throw;
+            }
+        }
     }
 }

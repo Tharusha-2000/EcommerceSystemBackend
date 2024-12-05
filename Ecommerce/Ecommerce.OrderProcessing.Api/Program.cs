@@ -1,6 +1,10 @@
 using Ecommerce.OrderProcessing.API.Controllers;
 using Ecommerce.OrderProcessing.Application.Services;
 using Ecommerce.OrderProcessing.Infras;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Stripe;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +22,7 @@ builder.Services.AddScoped<EcommerceDbContext>();
 builder.Services.AddScoped<ICartSer, CartSer>();
 builder.Services.AddScoped<IOrderSer, OrderSer>();
 builder.Services.AddScoped<IOrderProductSer, OrderProductSer>();
-
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 builder.Services.AddCors(options =>
 {
@@ -31,6 +35,23 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Add JWT authentication configuration
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["jwt:Issuer"],
+            ValidAudience = builder.Configuration["jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:Key"]))
+        };
+    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,8 +61,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
 app.UseHttpsRedirection();
 
+
+app.UseCors("AllowSpecificOrigins");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors("AllowLocalhost");

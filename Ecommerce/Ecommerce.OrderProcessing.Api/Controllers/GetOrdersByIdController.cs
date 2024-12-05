@@ -1,5 +1,6 @@
 ﻿using Ecommerce.OrderProcessing.API.Controllers;
 using Ecommerce.OrderProcessing.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Ecommerce.OrderProcessing.Api.Controllers
             _orderService = orderService;
         }
 
-
+        
         [HttpPost("batch")]
         public async Task<ActionResult<List<OrderDto>>> GetOrdersByIdsAsync([FromBody] List<int> orderIds)
         {

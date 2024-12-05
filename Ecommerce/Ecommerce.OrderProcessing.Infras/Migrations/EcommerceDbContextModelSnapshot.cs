@@ -74,19 +74,15 @@ namespace Ecommerce.OrderProcessing.Infras.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("address")
+                    b.Property<string>("city")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("email")
+                    b.Property<string>("country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("fName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("lName")
+                    b.Property<string>("paymentMethod")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -100,8 +96,20 @@ namespace Ecommerce.OrderProcessing.Infras.Migrations
                     b.Property<int>("postalcode")
                         .HasColumnType("int");
 
+                    b.Property<string>("province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float>("totalPrice")
                         .HasColumnType("real");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("userId")
                         .HasColumnType("int");
