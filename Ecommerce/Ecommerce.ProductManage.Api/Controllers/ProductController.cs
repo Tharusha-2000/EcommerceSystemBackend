@@ -1,6 +1,7 @@
 ﻿using Ecommerce.ProductManage.Application.Services;
 using Ecommerce.ProductManage.Domain.Models.Domains;
 using Ecommerce.ProductManage.Domain.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.ProductManage.Api.Controllers
@@ -16,6 +17,7 @@ namespace Ecommerce.ProductManage.Api.Controllers
             _ProductService = productsService;
         }
 
+      
         [HttpGet("GetAllProducts")]
         public async Task<ActionResult<List<Product>>> GetAllProductsAsync([FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] string? categories)
         {
@@ -83,6 +85,7 @@ namespace Ecommerce.ProductManage.Api.Controllers
             return Ok(productsByCategory);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateProductAsync")]
         public async Task<ActionResult> CreateProductAsync([FromBody] ProductDto productDto)
         {
@@ -100,6 +103,7 @@ namespace Ecommerce.ProductManage.Api.Controllers
             return Ok(product);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateProductAsync/{productId:int}")]
         public async Task<ActionResult> UpdateProductAsync(int productId, [FromBody] ProductDto productDto)
         {
@@ -118,6 +122,7 @@ namespace Ecommerce.ProductManage.Api.Controllers
             return Ok(product);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{productId:int}")]
         public async Task<ActionResult> DeleteProdcutAsync(int productId)
         {

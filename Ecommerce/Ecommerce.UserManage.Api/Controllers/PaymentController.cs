@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,6 +12,7 @@ public class PaymentController : ControllerBase
         _paymentService = paymentService;
     }
 
+    [Authorize(Roles = "customer,Admin")]
     [HttpPost("create-payment-intent")]
     public IActionResult CreatePaymentIntent([FromBody] PaymentIntentRequest request)
     {

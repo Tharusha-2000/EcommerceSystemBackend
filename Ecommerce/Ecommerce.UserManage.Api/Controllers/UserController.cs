@@ -1,5 +1,6 @@
 ﻿using Ecommerce.userManage.Application.Service;
 using Ecommerce.userManage.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,8 @@ namespace Ecommerce.userManage.Api.Controllers
             }
 
         }
+
+       
         [HttpGet("{Id?}")]
         public IActionResult getUserById(int Id)
         {
@@ -47,6 +50,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "customer,Admin")]
         [HttpPut]
         public IActionResult updateUser(UserModel userModel)
         {
@@ -62,6 +66,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
+        [Authorize(Roles ="customer,Admin")]
         [HttpGet("email/{email?}")]
         public IActionResult getUserByEmail(string email)
         {
@@ -77,7 +82,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{Id}")]
         public IActionResult deleteUser(int Id)
         {
@@ -93,6 +98,7 @@ namespace Ecommerce.userManage.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult getAllUsers()
         {
