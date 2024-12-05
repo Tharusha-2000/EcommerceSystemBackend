@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -46,10 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.OrderProcessing.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.ReviewAndRating.Test", "Ecommerce.ReviewAndRating.Test\Ecommerce.ReviewAndRating.Test.csproj", "{F34AAE2E-B359-40FC-B110-1ACDD4B932FE}"
 EndProject
-
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{9F654AEE-97D9-45FE-A653-FE37CE0831B4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.APIGateway", "Ecommerce.APIGateway\Ecommerce.APIGateway.csproj", "{9D62BD53-B1BB-4C9E-A7D0-B1639872AF00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.APIGateway", "Ecommerce.APIGateway\Ecommerce.APIGateway.csproj", "{93E46EB1-89A2-4151-9097-8EE42508E9DB}"
 
 EndProject
 Global
@@ -130,12 +128,10 @@ Global
 		{F34AAE2E-B359-40FC-B110-1ACDD4B932FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F34AAE2E-B359-40FC-B110-1ACDD4B932FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F34AAE2E-B359-40FC-B110-1ACDD4B932FE}.Release|Any CPU.Build.0 = Release|Any CPU
-
-		{9D62BD53-B1BB-4C9E-A7D0-B1639872AF00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D62BD53-B1BB-4C9E-A7D0-B1639872AF00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D62BD53-B1BB-4C9E-A7D0-B1639872AF00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D62BD53-B1BB-4C9E-A7D0-B1639872AF00}.Release|Any CPU.Build.0 = Release|Any CPU
-
+		{93E46EB1-89A2-4151-9097-8EE42508E9DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E46EB1-89A2-4151-9097-8EE42508E9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E46EB1-89A2-4151-9097-8EE42508E9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E46EB1-89A2-4151-9097-8EE42508E9DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,7 +155,6 @@ Global
 		{40D3A34B-1D7B-48D1-A7A1-9031FBB6B63B} = {154758FB-BC21-414A-A0DF-7EFD03531386}
 		{CCBB068D-EF99-4069-BBD9-1DAE76E43B90} = {154758FB-BC21-414A-A0DF-7EFD03531386}
 		{F34AAE2E-B359-40FC-B110-1ACDD4B932FE} = {6527595C-814A-495A-AA13-DB6481198760}
-		{9D62BD53-B1BB-4C9E-A7D0-B1639872AF00} = {9F654AEE-97D9-45FE-A653-FE37CE0831B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F6BEC4B-F3EE-4F42-A764-9CF070DD4E59}
