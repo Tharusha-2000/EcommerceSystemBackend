@@ -120,6 +120,31 @@
         "TtlSeconds": 10
       }
     },
+
+    {
+      "UpstreamPathTemplate": "/api/Order/byOrderId/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Order/byOrderId/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    
     {
       "UpstreamPathTemplate": "/api/Order/{everything}",
       "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
@@ -131,6 +156,29 @@
         }
       ],
       "DownstreamPathTemplate": "/api/Order/{everything}",
+      // Rate limit options
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10,
+        "PeriodTimespan": 10
+      },
+      // Data caching options
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/Payment/{everything}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7242
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Payment/{everything}",
       // Rate limit options
       "RateLimitOptions": {
         "EnableRateLimiting": true,
@@ -279,29 +327,6 @@
         }
       ],
       "DownstreamPathTemplate": "/api/GetUsersByIds",
-      // Rate limit options
-      "RateLimitOptions": {
-        "EnableRateLimiting": true,
-        "Period": "10s",
-        "Limit": 10,
-        "PeriodTimespan": 10
-      },
-      // Data caching options
-      "FileCacheOptions": {
-        "TtlSeconds": 10
-      }
-    },
-    {
-      "UpstreamPathTemplate": "/api/Payment",
-      "UpstreamHttpMethod": [ "Post", "Get" ],
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 8080
-        }
-      ],
-      "DownstreamPathTemplate": "/api/Payment",
       // Rate limit options
       "RateLimitOptions": {
         "EnableRateLimiting": true,
