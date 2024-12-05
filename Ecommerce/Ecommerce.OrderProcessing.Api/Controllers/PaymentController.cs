@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Ecommerce.OrderProcessing.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -19,11 +20,4 @@ public class PaymentController : ControllerBase
         var paymentIntent = _paymentService.CreatePaymentIntent(request.Amount, request.Currency, request.PaymentMethodTypes);
         return Ok(new { clientSecret = paymentIntent.ClientSecret });
     }
-}
-
-public class PaymentIntentRequest
-{
-    public long Amount { get; set; }
-    public string Currency { get; set; }
-    public List<string> PaymentMethodTypes { get; set; }
 }

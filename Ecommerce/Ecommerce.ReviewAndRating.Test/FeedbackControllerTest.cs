@@ -20,7 +20,7 @@ namespace Ecommerce.ReviewAndRating.Test
             _controller = new FeedBackController(_mockService.Object);
         }
 
-        //For validate the respose body of the API call -  [HttpGet("GetAllFeedbacks")]
+        //For validate the respose body of the API -  [HttpGet("GetAllFeedbacks")]
         [Fact]
         public async Task GetAllFeedbacksTest()
         {
@@ -72,7 +72,7 @@ namespace Ecommerce.ReviewAndRating.Test
 
         // Test for invalid product ID - [HttpGet("GetProductFeedback/{productId:int}")]
         [Fact]
-        public async Task GetProductFeedback_InvalidProductId_ReturnsNotFound()
+        public async Task GetProductFeedback_InvalidProductId()
         {
             int productId = 999;
             _mockService.Setup(service => service.GetProductFeedback(productId))
@@ -185,10 +185,5 @@ namespace Ecommerce.ReviewAndRating.Test
             var returnedFeedbacks = Assert.IsType<List<Feedback>>(okResult.Value);
             Assert.Empty(returnedFeedbacks);
         }
-
-
-
-
-
     }
 }
