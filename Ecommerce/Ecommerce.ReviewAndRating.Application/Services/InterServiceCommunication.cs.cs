@@ -24,7 +24,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
         public async Task<List<OrderDto>> GetOrdersByIdsAsync(List<int> orderIds)
         {
-            var apiUrl = "https://localhost:7242/api/GetOrdersById/batch"; 
+            var apiUrl = "http://localhost:5126/api/GetOrdersById/batch"; 
 
             var response = await _httpClient.PostAsJsonAsync(apiUrl, orderIds);
 
@@ -38,7 +38,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
         public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
         {
-            var apiUrl = "http://localhost:8080/api/GetUsersByIds/batch";
+            var apiUrl = "https://localhost:7087/api/GetUsersByIds/batch";
 
             var response = await _httpClient.PostAsJsonAsync(apiUrl, userIds);
 
@@ -51,12 +51,13 @@ namespace Ecommerce.ReviewAndRating.Application.Services
         }
 
 
-         public async Task<List<int>> GetProductIdFromOrderServicesAsync(int orderId)
-         {
 
-             // base URL of the OrderProduct service
-             var orderServiceBaseUrl = "https://localhost:7242/api/OrderProduct";
-             var url = $"{orderServiceBaseUrl}/byOrder/{orderId}";
+        public async Task<List<int>> GetProductIdFromOrderServicesAsync(int orderId)
+        {
+            // base URL of the OrderProduct service
+            var orderServiceBaseUrl = "http://localhost:5126/api/OrderProduct";
+            var url = $"{orderServiceBaseUrl}/byOrder/{orderId}";
+
 
              var response = await _httpClient.GetAsync(url);
 
