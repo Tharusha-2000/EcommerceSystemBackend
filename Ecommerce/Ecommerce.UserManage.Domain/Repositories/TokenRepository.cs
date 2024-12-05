@@ -83,7 +83,7 @@ namespace Ecommerce.userManage.Domain.Repositories
                 issuer: configuration["Jwt:Issuer"],
                 audience: configuration["Jwt:Issuer"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(600),
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
             );
             return new JwtSecurityTokenHandler().WriteToken(token);

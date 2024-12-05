@@ -13,19 +13,8 @@ builder.Services.AddOcelot(builder.Configuration)
     });
 
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowLocalhost", builder =>
-    {
-        builder.WithOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176")
-               .AllowAnyHeader()
-               .AllowAnyMethod()
-               .AllowCredentials();
-    });
-});
-
 var app = builder.Build();
-app.UseCors("AllowLocalhost");
+
 await app.UseOcelot();
 
 app.Run();
