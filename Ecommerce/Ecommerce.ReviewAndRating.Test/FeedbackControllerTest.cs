@@ -20,7 +20,7 @@ namespace Ecommerce.ReviewAndRating.Test
             _controller = new FeedBackController(_mockService.Object);
         }
 
-        //For validate the respose body of the API call -  [HttpGet("GetAllFeedbacks")]
+        //For validate the respose body of the API -  [HttpGet("GetAllFeedbacks")]
         [Fact]
         public async Task GetAllFeedbacksTest()
         {
@@ -70,6 +70,22 @@ namespace Ecommerce.ReviewAndRating.Test
             Assert.Equal("2024-12-01", returnedFeedback[0].givenDate);
         }
 
+        // Test for invalid product ID - [HttpGet("GetProductFeedback/{productId:int}")]
+        [Fact]
+        public async Task GetProductFeedback_InvalidProductId()
+        {
+            int productId = 999;
+            _mockService.Setup(service => service.GetProductFeedback(productId))
+                        .ReturnsAsync(new List<DisplayFeedbackDto>());
+
+            var result = await _controller.GetProductFeedback(productId);
+
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedFeedback = Assert.IsType<List<DisplayFeedbackDto>>(okResult.Value);
+            Assert.Empty(returnedFeedback);
+        }
+
+
         //For validate the respose body of the API - [HttpGet("GetFeedbackByOrderId/{orderId:int}")]
         [Fact]
         public async Task GetFeedbackByOrderIdTest()
@@ -114,24 +130,6 @@ namespace Ecommerce.ReviewAndRating.Test
             Assert.Equal(4, returnedFeedback.Rate);
         }
 
-      /*  [Fact]
-        public async Task GetFeedbackByOrderId_InvalidOrderId_ReturnsNotFound()
-        {
-            // Arrange
-            int orderId = 999;
-
-            _mockService.Setup(service => service.GetFeedbackByOrderId(orderId))
-                        .ReturnsAsync((FeedbackResponseDto)null); // Mock service to return null for invalid order ID
-
-
-            var result = await _controller.GetFeedbackByOrderId(orderId);
-
-            // Assert
-            var actionResult = Assert.IsType<ActionResult<FeedbackResponseDto>>(result); // Validate ActionResult type
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(actionResult.Result); // Validate NotFoundObjectResult type
-            Assert.Equal($"No feedback found for Order ID: {orderId}", notFoundResult.Value); // Validate the message
-        }
-      */
 
         //For validate the respose body of the API call - [HttpPost("SaveProductFeedback")]
         [Fact]
@@ -154,6 +152,26 @@ namespace Ecommerce.ReviewAndRating.Test
             Assert.Equal(200, okResult.StatusCode);
         }
 
+        // Test for invalid feedback data - [HttpPost("SaveProductFeedback")]
+        [Fact]
+        public async Task SaveProductFeedback_InvalidData_ReturnsBadRequest()
+        {
+            var feedbackDto = new FeedbackRequestDto
+            {
+                orderId = 123,
+                feedbackMessage = "", // Invalid feedback message
+                rate = 4,
+                givenDate = "2024-12-01"
+            };
+
+            _controller.ModelState.AddModelError("feedbackMessage", "Feedback message is required");
+
+            var result = await _controller.SaveProductFeedback(feedbackDto);
+
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<SerializableError>(badRequestResult.Value);
+        }
+
         // Test for no feedback found - [HttpPost("SaveProductFeedback")]
         [Fact]
         public async Task GetAllFeedbacks_NoFeedbacks_ReturnsEmptyList()
@@ -167,10 +185,5 @@ namespace Ecommerce.ReviewAndRating.Test
             var returnedFeedbacks = Assert.IsType<List<Feedback>>(okResult.Value);
             Assert.Empty(returnedFeedbacks);
         }
-
-
-
-
-
     }
 }

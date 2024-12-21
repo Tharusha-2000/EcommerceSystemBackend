@@ -16,8 +16,6 @@ namespace Ecommerce.ReviewAndRating.Application.Services
     {
         private readonly HttpClient _httpClient;
        
-
-
         public InterServiceCommunication(HttpClient httpClient)
         {
             _httpClient = new HttpClient();
@@ -40,7 +38,7 @@ namespace Ecommerce.ReviewAndRating.Application.Services
 
         public async Task<List<UserDto>> GetUsersByIdsAsync(List<int> userIds)
         {
-            var apiUrl = "http://localhost:8080/api/GetUsersByIds/batch";
+            var apiUrl = "http://localhost:8080api/GetUsersByIds/batch";
 
             var response = await _httpClient.PostAsJsonAsync(apiUrl, userIds);
 
@@ -53,7 +51,6 @@ namespace Ecommerce.ReviewAndRating.Application.Services
         }
 
 
-    
 
         public async Task<List<int>> GetProductIdFromOrderServicesAsync(int orderId)
         {
@@ -75,9 +72,6 @@ namespace Ecommerce.ReviewAndRating.Application.Services
              // Extract and return the product IDs
              return orderProducts.Select(op => op.ProductId).ToList();
          }
-        
-
-        
 
     }
 }
